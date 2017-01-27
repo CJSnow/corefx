@@ -17,9 +17,10 @@ namespace System.Data.Odbc.Tests
             // MyODBC driver for ODBC with a
             // hostname of localhost and database test
             string connectionString =
-               "DSN=MYSQLDSN;" +
-               "UID=myuserid;" +
-               "PWD=mypassword";
+                "Driver={SQL Server Native Client 11.0};" +
+                "Server=(localdb)\\MSSQLLocalDB;" +
+                "Database=master;" +
+                "Trusted_Connection=Yes;";
             IDbConnection dbcon;
             dbcon = new OdbcConnection(connectionString);
             dbcon.Open();
