@@ -103,14 +103,15 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetsWindows)' == 'true' And '$(IsPartialFacadeAssembly)' != 'true' ">
     <!--TODO s/Unix/Windows/-->
-    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Unix.cs" />
+    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Windows.cs" />
     <Compile Include="Common\System\Data\ProviderBase\DbConnectionPoolIdentity.Unix.cs" />
     <Compile Include="$(CommonPath)\System\Data\Locale\LocaleMapper.Windows.cs">
       <Link>Common\System\Data\Locale\LocaleMapper.Windows.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetsWindows)' != 'true' And '$(IsPartialFacadeAssembly)' != 'true' ">
-    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Unix.cs" />
+    <!--TODO test Unix implementation-->
+    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Windows.cs" />
     <Compile Include="Common\System\Data\ProviderBase\DbConnectionPoolIdentity.Unix.cs" />
     <Compile Include="$(CommonPath)\System\Data\Locale\LocaleMapper.Unix.cs">
       <Link>Common\System\Data\Locale\LocaleMapper.Unix.cs</Link>
