@@ -9,45 +9,38 @@ namespace System.Data.Odbc.Tests
 {
     public class ConnectionTests
     {
-        [Fact]
-        public void NorthwindTest()
+        [Theory]
+        [InlineData(0, "master (1)")]
+        [InlineData(1, "tempdb (2)")]
+        [InlineData(2, "model (3)")]
+        [InlineData(3, "msdb (4)")]
+        public void NorthwindTest(int index, string name)
         {
-            // have an ODBC DSN setup named MYSQLDSN
-            // that accesses a MySQL database via
-            // MyODBC driver for ODBC with a
-            // hostname of localhost and database test
-            string connectionString =
+            var connectionString =
                 "Driver={SQL Server Native Client 11.0};" +
                 "Server=(localdb)\\MSSQLLocalDB;" +
                 "Database=master;" +
                 "Trusted_Connection=Yes;";
-            IDbConnection dbcon;
-            dbcon = new OdbcConnection(connectionString);
+            IDbConnection dbcon = new OdbcConnection(connectionString);
             dbcon.Open();
-            IDbCommand dbcmd = dbcon.CreateCommand();
-            // requires a table to be created named employee
-            // with columns firstname and lastname
-            // such as,
-            //        CREATE TABLE employee (
-            //           firstname varchar(32),
-            //           lastname varchar(32));
-            string sql =
-                "SELECT firstname, lastname " +
-                "FROM employee";
-            dbcmd.CommandText = sql;
-            IDataReader reader = dbcmd.ExecuteReader();
-            while (reader.Read())
+            using (IDbCommand dbcmd = dbcon.CreateCommand())
             {
-                string FirstName = (string)reader["firstname"];
-                string LastName = (string)reader["lastname"];
-                Console.WriteLine("Name: " +
-                    FirstName + " " + LastName);
+                var sql =
+                    "SELECT * " +
+                    "FROM sys.databases";
+                dbcmd.CommandText = sql;
+                using (IDataReader reader = dbcmd.ExecuteReader())
+                {
+                    for (int i = 0; i < index + 1; i++)
+                    {
+                        reader.Read();
+                    }
+
+                    var actualName = (string)reader["name"];
+                    var databaseId = (int)reader["database_id"];
+                    Assert.Equal(name, $"{actualName} ({databaseId})");
+                }
             }
-            // clean up
-            reader.Close();
-            reader = null;
-            dbcmd.Dispose();
-            dbcmd = null;
             dbcon.Close();
             dbcon = null;
         }
