@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check unsafe methods
-// TODO[tinchou]: check ReleaseHandle method
-// TODO[tinchou]: migrate to Marshal
-// TODO[tinchou]: validate zeroBuffer approach
-
 namespace System.Data.ProviderBase
 {
     using System;
@@ -23,26 +18,18 @@ namespace System.Data.ProviderBase
     // so that when debugging, we can tell the difference between one DbBuffer and another
     internal abstract class DbBuffer : SafeHandle
     {
-        internal const int LMEM_FIXED = 0x0000;
-        internal const int LMEM_MOVEABLE = 0x0002;
-        internal const int LMEM_ZEROINIT = 0x0040;
-
         private readonly int _bufferLength;
 
         protected DbBuffer(int initialSize) : base(IntPtr.Zero, true)
         {
             if (0 < initialSize)
             {
-                //int flags = ((zeroBuffer) ? LMEM_ZEROINIT : LMEM_FIXED);
-
                 _bufferLength = initialSize;
                 RuntimeHelpers.PrepareConstrainedRegions();
                 try { }
                 finally
                 {
-                    //base.handle = SafeNativeMethods.LocalAlloc(flags, (IntPtr)initialSize);
-                    base.handle = Marshal.AllocHGlobal((IntPtr)initialSize);
-                    ZeroMemory(base.handle, initialSize);
+                    base.handle = SafeNativeMethods.LocalAlloc((IntPtr)initialSize);
                 }
                 if (IntPtr.Zero == base.handle)
                 {
@@ -87,9 +74,8 @@ namespace System.Data.ProviderBase
                 DangerousAddRef(ref mustRelease);
 
                 IntPtr ptr = ADP.IntPtrOffset(DangerousGetHandle(), offset);
-                int length = UnsafeNativeMethods.lstrlenW(ptr);
-                Validate(offset, (2 * (length + 1)));
-                value = Marshal.PtrToStringUni(ptr, length);
+                value = Marshal.PtrToStringUni(ptr);
+                Validate(offset, (2 * (value.Length + 1)));
             }
             finally
             {
@@ -395,8 +381,7 @@ namespace System.Data.ProviderBase
             base.handle = IntPtr.Zero;
             if (IntPtr.Zero != ptr)
             {
-                //SafeNativeMethods.LocalFree(ptr);
-                Marshal.FreeHGlobal(ptr);
+                SafeNativeMethods.LocalFree(ptr);
             }
             return true;
         }
@@ -669,7 +654,7 @@ namespace System.Data.ProviderBase
                 DangerousAddRef(ref mustRelease);
 
                 IntPtr ptr = DangerousGetHandle();
-                ZeroMemory(ptr, Length);
+                SafeNativeMethods.ZeroMemory(ptr, Length);
             }
             finally
             {
@@ -809,13 +794,6 @@ namespace System.Data.ProviderBase
             {
                 throw ADP.InternalError(ADP.InternalErrorCode.InvalidBuffer);
             }
-        }
-
-        // TODO[tinchou]: test
-        private unsafe void ZeroMemory(IntPtr ptr, int length)
-        {
-            var zeroes = new byte[length];
-            Marshal.Copy(zeroes, 0, ptr, length);
         }
     }
 }

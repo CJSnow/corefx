@@ -2007,10 +2007,6 @@ namespace System.Data.Odbc
             } while ((!singleResult && hasMoreResults && !hasColumns)  // repeat for results with no columns
                      || ((ODBC32.RetCode.NO_DATA != retcode) && allresults && (loop < MaxConsecutiveFailure)) // or process all results until done
                      || (singleResult && hasMoreResults));           // or for any result in singelResult mode
-            if (MaxConsecutiveFailure <= loop)
-            {
-                Bid.Trace("<odbc.OdbcDataReader.NextResult|INFO> 2000 consecutive failed results");
-            }
 
             if (retcode == ODBC32.RetCode.NO_DATA)
             {

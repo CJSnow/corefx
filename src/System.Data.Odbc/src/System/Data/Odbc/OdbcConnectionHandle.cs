@@ -247,7 +247,6 @@ namespace System.Data.Odbc
         internal ODBC32.RetCode GetConnectionAttribute(ODBC32.SQL_ATTR attribute, byte[] buffer, out int cbActual)
         {
             ODBC32.RetCode retcode = UnsafeNativeMethods.SQLGetConnectAttrW(this, attribute, buffer, buffer.Length, out cbActual);
-            Bid.Trace("<odbc.SQLGetConnectAttr|ODBC> SQLRETURN=%d, Attribute=%d, BufferLength=%d, StringLength=%d\n", (int)retcode, (int)attribute, buffer.Length, (int)cbActual);
             return retcode;
         }
 
@@ -261,14 +260,12 @@ namespace System.Data.Odbc
         internal ODBC32.RetCode GetInfo2(ODBC32.SQL_INFO info, byte[] buffer, out short cbActual)
         {
             ODBC32.RetCode retcode = UnsafeNativeMethods.SQLGetInfoW(this, info, buffer, checked((short)buffer.Length), out cbActual);
-            Bid.Trace("<odbc.SQLGetInfo|ODBC> SQLRETURN=%d, InfoType=%d, BufferLength=%d, StringLength=%d\n", (int)retcode, (int)info, buffer.Length, (int)cbActual);
             return retcode;
         }
 
         internal ODBC32.RetCode GetInfo1(ODBC32.SQL_INFO info, byte[] buffer)
         {
             ODBC32.RetCode retcode = UnsafeNativeMethods.SQLGetInfoW(this, info, buffer, checked((short)buffer.Length), ADP.PtrZero);
-            Bid.Trace("<odbc.SQLGetInfo|ODBC> SQLRETURN=%d, InfoType=%d, BufferLength=%d\n", (int)retcode, (int)info, buffer.Length);
             return retcode;
         }
 
@@ -282,7 +279,6 @@ namespace System.Data.Odbc
         internal ODBC32.RetCode SetConnectionAttribute3(ODBC32.SQL_ATTR attribute, string buffer, Int32 length)
         {
             ODBC32.RetCode retcode = UnsafeNativeMethods.SQLSetConnectAttrW(this, attribute, buffer, length);
-            Bid.Trace("<odbc.SQLSetConnectAttr|ODBC> SQLRETURN=%d, Attribute=%d, BufferLength=%d\n", (int)retcode, (int)attribute, buffer.Length);
             return retcode;
         }
 

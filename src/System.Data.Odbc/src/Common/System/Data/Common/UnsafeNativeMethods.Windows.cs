@@ -2,19 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Data.Odbc;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.Permissions;
-using System.Text;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using System.Security;
+using System.Text;
 
 namespace System.Data.Common
 {
-    static class ExternDll
+    internal static class ExternDll
     {
         public const string Odbc32 = "odbc32.dll";
     }

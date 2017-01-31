@@ -186,7 +186,6 @@ namespace System.Data.Odbc
             }
             set
             {
-                Bid.Trace("<odbc.OdbcCommand.set_CommandTimeout|API> %d#, %d\n", ObjectID, value);
                 if (value < 0)
                 {
                     throw ADP.InvalidCommandTimeout(value);
@@ -471,7 +470,6 @@ namespace System.Data.Odbc
         object ICloneable.Clone()
         {
             OdbcCommand clone = new OdbcCommand();
-            Bid.Trace("<odbc.OdbcCommand.Clone|API> %d#, clone=%d#\n", ObjectID, clone.ObjectID);
             clone.CommandText = CommandText;
             clone.CommandTimeout = this.CommandTimeout;
             clone.CommandType = CommandType;
