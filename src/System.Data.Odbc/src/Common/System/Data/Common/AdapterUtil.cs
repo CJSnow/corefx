@@ -100,10 +100,6 @@ namespace System.Data.Common
         static private void TraceException(string trace, Exception e)
         {
             Debug.Assert(null != e, "TraceException: null Exception");
-            if (null != e)
-            {
-                Bid.Trace(trace, e.ToString()); // will include callstack if permission is available
-            }
         }
 
         static internal void TraceExceptionAsReturnValue(Exception e)

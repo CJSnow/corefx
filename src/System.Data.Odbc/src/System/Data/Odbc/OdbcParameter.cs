@@ -855,7 +855,6 @@ namespace System.Data.Odbc
             {
                 if ("07006" == command.GetDiagSqlState())
                 {
-                    Bid.Trace("<odbc.OdbcParameter.Bind|ERR> Call to BindParameter returned errorcode [07006]\n");
                     command.Connection.FlagRestrictedSqlBindType(_bindtype._sql_type);
                     if (allowReentrance)
                     {
