@@ -39,20 +39,6 @@ namespace System.Data.Common
         // The resource Framework.txt will ensure proper string text based on the appropriate
         // locale.
 
-        internal static Task<T> CreatedTaskWithException<T>(Exception ex)
-        {
-            TaskCompletionSource<T> completion = new TaskCompletionSource<T>();
-            completion.SetException(ex);
-            return completion.Task;
-        }
-
-        internal static Task<T> CreatedTaskWithCancellation<T>()
-        {
-            TaskCompletionSource<T> completion = new TaskCompletionSource<T>();
-            completion.SetCanceled();
-            return completion.Task;
-        }
-
         internal static Exception ExceptionWithStackTrace(Exception e)
         {
             try
@@ -103,11 +89,6 @@ namespace System.Data.Common
         {
             TraceException("<comm.ADP.TraceException|ERR|THROW> '%ls'\n", e);
         }
-        internal static void TraceExceptionForCapture(Exception e)
-        {
-            Debug.Assert(ADP.IsCatchableExceptionType(e), "Invalid exception type, should have been re-thrown!");
-            TraceException("<comm.ADP.TraceException|ERR|CATCH> '%ls'\n", e);
-        }
         internal static void TraceExceptionWithoutRethrow(Exception e)
         {
             Debug.Assert(ADP.IsCatchableExceptionType(e), "Invalid exception type, should have been re-thrown!");
@@ -135,12 +116,6 @@ namespace System.Data.Common
             TraceExceptionAsReturnValue(e);
             return e;
         }
-        internal static ArgumentException Argument(string error, string parameter, Exception inner)
-        {
-            ArgumentException e = new ArgumentException(error, parameter, inner);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
         internal static ArgumentNullException ArgumentNull(string parameter)
         {
             ArgumentNullException e = new ArgumentNullException(parameter);
@@ -165,45 +140,15 @@ namespace System.Data.Common
             TraceExceptionAsReturnValue(e);
             return e;
         }
-        internal static ArgumentOutOfRangeException ArgumentOutOfRange(string message, string parameterName, object value)
-        {
-            ArgumentOutOfRangeException e = new ArgumentOutOfRangeException(parameterName, value, message);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        //static internal ConfigurationException Configuration(string message)
-        //{
-        //    ConfigurationException e = new ConfigurationErrorsException(message);
-        //    TraceExceptionAsReturnValue(e);
-        //    return e;
-        //}
-        //static internal ConfigurationException Configuration(string message, XmlNode node)
-        //{
-        //    ConfigurationException e = new ConfigurationErrorsException(message, node);
-        //    TraceExceptionAsReturnValue(e);
-        //    return e;
-        //}
         internal static DataException Data(string message)
         {
             DataException e = new DataException(message);
             TraceExceptionAsReturnValue(e);
             return e;
         }
-        internal static IndexOutOfRangeException IndexOutOfRange(int value)
-        {
-            IndexOutOfRangeException e = new IndexOutOfRangeException(value.ToString(CultureInfo.InvariantCulture));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
         internal static IndexOutOfRangeException IndexOutOfRange(string error)
         {
             IndexOutOfRangeException e = new IndexOutOfRangeException(error);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        internal static IndexOutOfRangeException IndexOutOfRange()
-        {
-            IndexOutOfRangeException e = new IndexOutOfRangeException();
             TraceExceptionAsReturnValue(e);
             return e;
         }
@@ -235,55 +180,15 @@ namespace System.Data.Common
             TraceExceptionAsReturnValue(e);
             return e;
         }
-        internal static NotImplementedException NotImplemented(string error)
-        {
-            NotImplementedException e = new NotImplementedException(error);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
         internal static NotSupportedException NotSupported()
         {
             NotSupportedException e = new NotSupportedException();
             TraceExceptionAsReturnValue(e);
             return e;
         }
-        internal static NotSupportedException NotSupported(string error)
-        {
-            NotSupportedException e = new NotSupportedException(error);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        internal static OverflowException Overflow(string error)
-        {
-            return Overflow(error, null);
-        }
-        internal static OverflowException Overflow(string error, Exception inner)
-        {
-            OverflowException e = new OverflowException(error, inner);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        internal static PlatformNotSupportedException PropertyNotSupported(string property)
-        {
-            PlatformNotSupportedException e = new PlatformNotSupportedException(Res.GetString(Res.ADP_PropertyNotSupported, property));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        internal static TypeLoadException TypeLoad(string error)
-        {
-            TypeLoadException e = new TypeLoadException(error);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
         internal static InvalidCastException InvalidCast()
         {
             InvalidCastException e = new InvalidCastException();
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-        internal static IOException IO(string error)
-        {
-            IOException e = new IOException(error);
             TraceExceptionAsReturnValue(e);
             return e;
         }
@@ -304,47 +209,6 @@ namespace System.Data.Common
         private static InvalidOperationException Provider(string error)
         {
             return InvalidOperation(error);
-        }
-        internal static ObjectDisposedException ObjectDisposed(object instance)
-        {
-            ObjectDisposedException e = new ObjectDisposedException(instance.GetType().Name);
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static InvalidOperationException MethodCalledTwice(string method)
-        {
-            InvalidOperationException e = new InvalidOperationException(Res.GetString(Res.ADP_CalledTwice, method));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static ArgumentException IncorrectAsyncResult()
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_IncorrectAsyncResult), "AsyncResult");
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static ArgumentException SingleValuedProperty(string propertyName, string value)
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_SingleValuedProperty, propertyName, value));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static ArgumentException DoubleValuedProperty(string propertyName, string value1, string value2)
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_DoubleValuedProperty, propertyName, value1, value2));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static ArgumentException InvalidPrefixSuffix()
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_InvalidPrefixSuffix));
-            TraceExceptionAsReturnValue(e);
-            return e;
         }
 
         internal static ArgumentException InvalidMultipartName(string property, string value)
@@ -368,20 +232,6 @@ namespace System.Data.Common
             return e;
         }
 
-        internal static ArgumentException BadParameterName(string parameterName)
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_BadParameterName, parameterName));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
-        internal static ArgumentException MultipleReturnValue()
-        {
-            ArgumentException e = new ArgumentException(Res.GetString(Res.ADP_MultipleReturnValue));
-            TraceExceptionAsReturnValue(e);
-            return e;
-        }
-
         //
         // Helper Functions
         //
@@ -391,14 +241,6 @@ namespace System.Data.Common
             if (0 == value.Length)
             {
                 throw Argument(Res.GetString(Res.ADP_EmptyString, parameterName)); // MDAC 94859
-            }
-        }
-        internal static void CheckArgumentLength(Array value, string parameterName)
-        {
-            CheckArgumentNull(value, parameterName);
-            if (0 == value.Length)
-            {
-                throw Argument(Res.GetString(Res.ADP_EmptyArray, parameterName));
             }
         }
         internal static void CheckArgumentNull(object value, string parameterName)
@@ -463,61 +305,6 @@ namespace System.Data.Common
             return ADP.ArgumentOutOfRange(Res.GetString(Res.ADP_NotSupportedEnumerationValue, type.Name, value, method), type.Name);
         }
 
-        internal static ArgumentOutOfRangeException InvalidAcceptRejectRule(AcceptRejectRule value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case AcceptRejectRule.None:
-                case AcceptRejectRule.Cascade:
-                    Debug.Assert(false, "valid AcceptRejectRule " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(AcceptRejectRule), (int)value);
-        }
-        // DbCommandBuilder.CatalogLocation
-        internal static ArgumentOutOfRangeException InvalidCatalogLocation(CatalogLocation value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case CatalogLocation.Start:
-                case CatalogLocation.End:
-                    Debug.Assert(false, "valid CatalogLocation " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(CatalogLocation), (int)value);
-        }
-
-        internal static ArgumentOutOfRangeException InvalidCommandBehavior(CommandBehavior value)
-        {
-#if DEBUG
-            if ((0 <= (int)value) && ((int)value <= 0x3F))
-            {
-                Debug.Assert(false, "valid CommandType " + value.ToString());
-            }
-#endif
-            return InvalidEnumerationValue(typeof(CommandBehavior), (int)value);
-        }
-        internal static void ValidateCommandBehavior(CommandBehavior value)
-        {
-            if (((int)value < 0) || (0x3F < (int)value))
-            {
-                throw InvalidCommandBehavior(value);
-            }
-        }
-        internal static ArgumentException InvalidArgumentLength(string argumentName, int limit)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidArgumentLength, argumentName, limit));
-        }
-
-        internal static ArgumentException MustBeReadOnly(string argumentName)
-        {
-            return Argument(Res.GetString(Res.ADP_MustBeReadOnly, argumentName));
-        }
-
         // IDbCommand.CommandType
         internal static ArgumentOutOfRangeException InvalidCommandType(CommandType value)
         {
@@ -532,56 +319,6 @@ namespace System.Data.Common
             }
 #endif
             return InvalidEnumerationValue(typeof(CommandType), (int)value);
-        }
-
-        internal static ArgumentOutOfRangeException InvalidConflictOptions(ConflictOption value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case ConflictOption.CompareAllSearchableValues:
-                case ConflictOption.CompareRowVersion:
-                case ConflictOption.OverwriteChanges:
-                    Debug.Assert(false, "valid ConflictOption " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(ConflictOption), (int)value);
-        }
-
-        // IDataAdapter.Update
-        internal static ArgumentOutOfRangeException InvalidDataRowState(DataRowState value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case DataRowState.Detached:
-                case DataRowState.Unchanged:
-                case DataRowState.Added:
-                case DataRowState.Deleted:
-                case DataRowState.Modified:
-                    Debug.Assert(false, "valid DataRowState " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(DataRowState), (int)value);
-        }
-
-        // IDataParameter.SourceVersion
-        internal static ArgumentOutOfRangeException InvalidDataRowVersion(DataRowVersion value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case DataRowVersion.Default:
-                case DataRowVersion.Current:
-                case DataRowVersion.Original:
-                case DataRowVersion.Proposed:
-                    Debug.Assert(false, "valid DataRowVersion " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(DataRowVersion), (int)value);
         }
 
         // IDbConnection.BeginTransaction, OleDbTransaction.Begin
@@ -619,55 +356,6 @@ namespace System.Data.Common
             return InvalidEnumerationValue(typeof(KeyRestrictionBehavior), (int)value);
         }
 
-        // IDataAdapter.FillLoadOption
-        internal static ArgumentOutOfRangeException InvalidLoadOption(LoadOption value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case LoadOption.OverwriteChanges:
-                case LoadOption.PreserveChanges:
-                case LoadOption.Upsert:
-                    Debug.Assert(false, "valid LoadOption " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(LoadOption), (int)value);
-        }
-
-        // IDataAdapter.MissingMappingAction
-        internal static ArgumentOutOfRangeException InvalidMissingMappingAction(MissingMappingAction value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case MissingMappingAction.Passthrough:
-                case MissingMappingAction.Ignore:
-                case MissingMappingAction.Error:
-                    Debug.Assert(false, "valid MissingMappingAction " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(MissingMappingAction), (int)value);
-        }
-
-        // IDataAdapter.MissingSchemaAction
-        internal static ArgumentOutOfRangeException InvalidMissingSchemaAction(MissingSchemaAction value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case MissingSchemaAction.Add:
-                case MissingSchemaAction.Ignore:
-                case MissingSchemaAction.Error:
-                case MissingSchemaAction.AddWithKey:
-                    Debug.Assert(false, "valid MissingSchemaAction " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(MissingSchemaAction), (int)value);
-        }
-
         // IDataParameter.Direction
         internal static ArgumentOutOfRangeException InvalidParameterDirection(ParameterDirection value)
         {
@@ -697,37 +385,6 @@ namespace System.Data.Common
             }
 #endif
             return InvalidEnumerationValue(typeof(PermissionState), (int)value);
-        }
-
-        internal static ArgumentOutOfRangeException InvalidRule(Rule value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case Rule.None:
-                case Rule.Cascade:
-                case Rule.SetNull:
-                case Rule.SetDefault:
-                    Debug.Assert(false, "valid Rule " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(Rule), (int)value);
-        }
-
-        // IDataAdapter.FillSchema
-        internal static ArgumentOutOfRangeException InvalidSchemaType(SchemaType value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case SchemaType.Source:
-                case SchemaType.Mapped:
-                    Debug.Assert(false, "valid SchemaType " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(SchemaType), (int)value);
         }
 
         // RowUpdatingEventArgs.StatementType
@@ -765,105 +422,6 @@ namespace System.Data.Common
             return InvalidEnumerationValue(typeof(UpdateRowSource), (int)value);
         }
 
-        // RowUpdatingEventArgs.UpdateStatus
-        internal static ArgumentOutOfRangeException InvalidUpdateStatus(UpdateStatus value)
-        {
-#if DEBUG
-            switch (value)
-            {
-                case UpdateStatus.Continue:
-                case UpdateStatus.ErrorsOccurred:
-                case UpdateStatus.SkipAllRemainingRows:
-                case UpdateStatus.SkipCurrentRow:
-                    Debug.Assert(false, "valid UpdateStatus " + value.ToString());
-                    break;
-            }
-#endif
-            return InvalidEnumerationValue(typeof(UpdateStatus), (int)value);
-        }
-
-        internal static ArgumentOutOfRangeException NotSupportedCommandBehavior(CommandBehavior value, string method)
-        {
-            return NotSupportedEnumerationValue(typeof(CommandBehavior), value.ToString(), method);
-        }
-
-        internal static ArgumentOutOfRangeException NotSupportedStatementType(StatementType value, string method)
-        {
-            return NotSupportedEnumerationValue(typeof(StatementType), value.ToString(), method);
-        }
-
-        //        static internal ArgumentOutOfRangeException InvalidUserDefinedTypeSerializationFormat(Microsoft.SqlServer.Server.Format value)
-        //        {
-        //#if DEBUG
-        //            switch (value)
-        //            {
-        //                case Microsoft.SqlServer.Server.Format.Unknown:
-        //                case Microsoft.SqlServer.Server.Format.Native:
-        //                case Microsoft.SqlServer.Server.Format.UserDefined:
-        //                    Debug.Assert(false, "valid UserDefinedTypeSerializationFormat " + value.ToString());
-        //                    break;
-        //            }
-        //#endif
-        //            return InvalidEnumerationValue(typeof(Microsoft.SqlServer.Server.Format), (int)value);
-        //        }
-
-        //        static internal ArgumentOutOfRangeException NotSupportedUserDefinedTypeSerializationFormat(Microsoft.SqlServer.Server.Format value, string method)
-        //        {
-        //            return ADP.NotSupportedEnumerationValue(typeof(Microsoft.SqlServer.Server.Format), value.ToString(), method);
-        //        }
-
-        //
-        // DbProviderFactories
-        //
-        internal static ArgumentException ConfigProviderNotFound()
-        {
-            return Argument(Res.GetString(Res.ConfigProviderNotFound));
-        }
-        internal static InvalidOperationException ConfigProviderInvalid()
-        {
-            return InvalidOperation(Res.GetString(Res.ConfigProviderInvalid));
-        }
-        //static internal ConfigurationException ConfigProviderNotInstalled()
-        //{
-        //    return Configuration(Res.GetString(Res.ConfigProviderNotInstalled));
-        //}
-        //static internal ConfigurationException ConfigProviderMissing()
-        //{
-        //    return Configuration(Res.GetString(Res.ConfigProviderMissing));
-        //}
-
-        //
-        // DbProviderConfigurationHandler
-        //
-        //static internal ConfigurationException ConfigBaseNoChildNodes(XmlNode node)
-        //{ // Res.Config_base_no_child_nodes
-        //    return Configuration(Res.GetString(Res.ConfigBaseNoChildNodes), node);
-        //}
-        //static internal ConfigurationException ConfigBaseElementsOnly(XmlNode node)
-        //{ // Res.Config_base_elements_only
-        //    return Configuration(Res.GetString(Res.ConfigBaseElementsOnly), node);
-        //}
-        //static internal ConfigurationException ConfigUnrecognizedAttributes(XmlNode node)
-        //{ // Res.Config_base_unrecognized_attribute
-        //    return Configuration(Res.GetString(Res.ConfigUnrecognizedAttributes, node.Attributes[0].Name), node);
-        //}
-        //static internal ConfigurationException ConfigUnrecognizedElement(XmlNode node)
-        //{ // Res.Config_base_unrecognized_element
-        //    return Configuration(Res.GetString(Res.ConfigUnrecognizedElement), node);
-        //}
-        //static internal ConfigurationException ConfigSectionsUnique(string sectionName)
-        //{ // Res.Res.ConfigSectionsUnique
-        //    return Configuration(Res.GetString(Res.ConfigSectionsUnique, sectionName));
-        //}
-        //static internal ConfigurationException ConfigRequiredAttributeMissing(string name, XmlNode node)
-        //{ // Res.Config_base_required_attribute_missing
-        //    return Configuration(Res.GetString(Res.ConfigRequiredAttributeMissing, name), node);
-        //}
-        //static internal ConfigurationException ConfigRequiredAttributeEmpty(string name, XmlNode node)
-        //{ // Res.Config_base_required_attribute_empty
-        //    return Configuration(Res.GetString(Res.ConfigRequiredAttributeEmpty, name), node);
-        //}
-
         //
         // DbConnectionOptions, DataAccess
         //
@@ -880,14 +438,6 @@ namespace System.Data.Common
             return Argument(Res.GetString(Res.ADP_EmptyKeyValue, keyword));
         }
         */
-        internal static ArgumentException UdlFileError(Exception inner)
-        {
-            return Argument(Res.GetString(Res.ADP_UdlFileError), inner);
-        }
-        internal static ArgumentException InvalidUDL()
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidUDL));
-        }
         internal static InvalidOperationException InvalidDataDirectory()
         {
             return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidDataDirectory));
@@ -900,73 +450,9 @@ namespace System.Data.Common
         {
             return Argument(Res.GetString(Res.ADP_InvalidValue), parameterName);
         }
-        internal static ArgumentException InvalidMinMaxPoolSizeValues()
-        {
-            return ADP.Argument(Res.GetString(Res.ADP_InvalidMinMaxPoolSizeValues));
-        }
         internal static ArgumentException ConvertFailed(Type fromType, Type toType, Exception innerException)
         {
             return ADP.Argument(Res.GetString(Res.SqlConvert_ConvertFailed, fromType.FullName, toType.FullName), innerException);
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfSecureAndClearCredential()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureAndClearCredential));
-        }
-
-        internal static ArgumentException InvalidMixedArgumentOfSecureAndClearCredential()
-        {
-            return ADP.Argument(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureAndClearCredential));
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfSecureCredentialAndIntegratedSecurity()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureCredentialAndIntegratedSecurity));
-        }
-
-        internal static ArgumentException InvalidMixedArgumentOfSecureCredentialAndIntegratedSecurity()
-        {
-            return ADP.Argument(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureCredentialAndIntegratedSecurity));
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfSecureCredentialAndContextConnection()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureCredentialAndContextConnection));
-        }
-
-        internal static ArgumentException InvalidMixedArgumentOfSecureCredentialAndContextConnection()
-        {
-            return ADP.Argument(Res.GetString(Res.ADP_InvalidMixedUsageOfSecureCredentialAndContextConnection));
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfAccessTokenAndContextConnection()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfAccessTokenAndContextConnection));
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfAccessTokenAndIntegratedSecurity()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfAccessTokenAndIntegratedSecurity));
-        }
-
-        internal static InvalidOperationException InvalidMixedUsageOfAccessTokenAndUserIDPassword()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfAccessTokenAndUserIDPassword));
-        }
-
-        internal static Exception InvalidMixedUsageOfAccessTokenAndCredential()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfAccessTokenAndCredential));
-        }
-
-        internal static Exception InvalidMixedUsageOfAccessTokenAndAuthentication()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfAccessTokenAndAuthentication));
-        }
-
-        internal static Exception InvalidMixedUsageOfCredentialAndAccessToken()
-        {
-            return ADP.InvalidOperation(Res.GetString(Res.ADP_InvalidMixedUsageOfCredentialAndAccessToken));
         }
 
         //
@@ -977,12 +463,6 @@ namespace System.Data.Common
             return InvalidOperation(Res.GetString(Res.ADP_NoConnectionString));
         }
 
-        //static internal NotImplementedException MethodNotImplemented(string methodName)
-        //{
-        //    NotImplementedException e = new NotImplementedException(methodName);
-        //    TraceExceptionAsReturnValue(e);
-        //    return e;
-        //}
         internal static Exception MethodNotImplemented([CallerMemberName] string methodName = "")
         {
             return System.NotImplemented.ByDesignWithMessage(methodName);
@@ -1008,16 +488,6 @@ namespace System.Data.Common
             }
         }
 
-        //static internal ConfigurationException ConfigUnableToLoadXmlMetaDataFile(string settingName)
-        //{
-        //    return Configuration(Res.GetString(Res.OleDb_ConfigUnableToLoadXmlMetaDataFile, settingName));
-        //}
-
-        //static internal ConfigurationException ConfigWrongNumberOfValues(string settingName)
-        //{
-        //    return Configuration(Res.GetString(Res.OleDb_ConfigWrongNumberOfValues, settingName));
-        //}
-
         //
         // : DbConnectionOptions, DataAccess, SqlClient
         //
@@ -1025,17 +495,9 @@ namespace System.Data.Common
         {
             return InvalidConnectionOptionValue(key, null);
         }
-        internal static Exception InvalidConnectionOptionValueLength(string key, int limit)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidConnectionOptionValueLength, key, limit));
-        }
         internal static Exception InvalidConnectionOptionValue(string key, Exception inner)
         {
             return Argument(Res.GetString(Res.ADP_InvalidConnectionOptionValue, key), inner);
-        }
-        internal static Exception MissingConnectionOptionValue(string key, string requiredAdditionalKey)
-        {
-            return Argument(Res.GetString(Res.ADP_MissingConnectionOptionValue, key, requiredAdditionalKey));
         }
 
         //
@@ -1052,11 +514,6 @@ namespace System.Data.Common
         internal static Exception PermissionTypeMismatch()
         {
             return Argument(Res.GetString(Res.ADP_PermissionTypeMismatch));
-        }
-
-        internal static Exception WrongType(Type got, Type expected)
-        {
-            return Argument(Res.GetString(Res.SQL_WrongType, got.ToString(), expected.ToString()));
         }
 
         internal static Exception OdbcNoTypesFromProvider()
@@ -1120,19 +577,9 @@ namespace System.Data.Common
         {
             return Provider(Res.GetString(Res.ADP_TransactionConnectionMismatch));
         }
-        internal static InvalidOperationException TransactionCompletedButNotDisposed()
-        {
-            return Provider(Res.GetString(Res.ADP_TransactionCompletedButNotDisposed));
-        }
         internal static InvalidOperationException TransactionRequired(string method)
         {
             return Provider(Res.GetString(Res.ADP_TransactionRequired, method));
-        }
-
-        // IDbDataAdapter.Fill(Schema)
-        internal static InvalidOperationException MissingSelectCommand(string method)
-        {
-            return Provider(Res.GetString(Res.ADP_MissingSelectCommand, method));
         }
 
         //
@@ -1143,141 +590,9 @@ namespace System.Data.Common
             return InvalidOperation(error);
         }
 
-        // DataColumnMapping.GetDataColumnBySchemaAction
-        internal static InvalidOperationException ColumnSchemaExpression(string srcColumn, string cacheColumn)
-        {
-            return DataMapping(Res.GetString(Res.ADP_ColumnSchemaExpression, srcColumn, cacheColumn));
-        }
-
-        // DataColumnMapping.GetDataColumnBySchemaAction
-        internal static InvalidOperationException ColumnSchemaMismatch(string srcColumn, Type srcType, DataColumn column)
-        {
-            return DataMapping(Res.GetString(Res.ADP_ColumnSchemaMismatch, srcColumn, srcType.Name, column.ColumnName, column.DataType.Name));
-        }
-
-        // DataColumnMapping.GetDataColumnBySchemaAction
-        internal static InvalidOperationException ColumnSchemaMissing(string cacheColumn, string tableName, string srcColumn)
-        {
-            if (ADP.IsEmpty(tableName))
-            {
-                return InvalidOperation(Res.GetString(Res.ADP_ColumnSchemaMissing1, cacheColumn, tableName, srcColumn));
-            }
-            return DataMapping(Res.GetString(Res.ADP_ColumnSchemaMissing2, cacheColumn, tableName, srcColumn));
-        }
-
-        // DataColumnMappingCollection.GetColumnMappingBySchemaAction
-        internal static InvalidOperationException MissingColumnMapping(string srcColumn)
-        {
-            return DataMapping(Res.GetString(Res.ADP_MissingColumnMapping, srcColumn));
-        }
-
-        // DataTableMapping.GetDataTableBySchemaAction
-        internal static InvalidOperationException MissingTableSchema(string cacheTable, string srcTable)
-        {
-            return DataMapping(Res.GetString(Res.ADP_MissingTableSchema, cacheTable, srcTable));
-        }
-
-        // DataTableMappingCollection.GetTableMappingBySchemaAction
-        internal static InvalidOperationException MissingTableMapping(string srcTable)
-        {
-            return DataMapping(Res.GetString(Res.ADP_MissingTableMapping, srcTable));
-        }
-
-        // DbDataAdapter.Update
-        internal static InvalidOperationException MissingTableMappingDestination(string dstTable)
-        {
-            return DataMapping(Res.GetString(Res.ADP_MissingTableMappingDestination, dstTable));
-        }
-
-        //
-        // DataColumnMappingCollection, DataAccess
-        //
-        internal static Exception InvalidSourceColumn(string parameter)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidSourceColumn), parameter);
-        }
-        internal static Exception ColumnsAddNullAttempt(string parameter)
-        {
-            return CollectionNullValue(parameter, typeof(DataColumnMappingCollection), typeof(DataColumnMapping));
-        }
-        internal static Exception ColumnsDataSetColumn(string cacheColumn)
-        {
-            return CollectionIndexString(typeof(DataColumnMapping), ADP.DataSetColumn, cacheColumn, typeof(DataColumnMappingCollection));
-        }
-        internal static Exception ColumnsIndexInt32(int index, IColumnMappingCollection collection)
-        {
-            return CollectionIndexInt32(index, collection.GetType(), collection.Count);
-        }
-        internal static Exception ColumnsIndexSource(string srcColumn)
-        {
-            return CollectionIndexString(typeof(DataColumnMapping), ADP.SourceColumn, srcColumn, typeof(DataColumnMappingCollection));
-        }
-        internal static Exception ColumnsIsNotParent(ICollection collection)
-        {
-            return ParametersIsNotParent(typeof(DataColumnMapping), collection);
-        }
-        internal static Exception ColumnsIsParent(ICollection collection)
-        {
-            return ParametersIsParent(typeof(DataColumnMapping), collection);
-        }
-        internal static Exception ColumnsUniqueSourceColumn(string srcColumn)
-        {
-            return CollectionUniqueValue(typeof(DataColumnMapping), ADP.SourceColumn, srcColumn);
-        }
-        internal static Exception NotADataColumnMapping(object value)
-        {
-            return CollectionInvalidType(typeof(DataColumnMappingCollection), typeof(DataColumnMapping), value);
-        }
-
-        //
-        // DataTableMappingCollection, DataAccess
-        //
-        internal static Exception InvalidSourceTable(string parameter)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidSourceTable), parameter);
-        }
-        internal static Exception TablesAddNullAttempt(string parameter)
-        {
-            return CollectionNullValue(parameter, typeof(DataTableMappingCollection), typeof(DataTableMapping));
-        }
-        internal static Exception TablesDataSetTable(string cacheTable)
-        {
-            return CollectionIndexString(typeof(DataTableMapping), ADP.DataSetTable, cacheTable, typeof(DataTableMappingCollection));
-        }
-        internal static Exception TablesIndexInt32(int index, ITableMappingCollection collection)
-        {
-            return CollectionIndexInt32(index, collection.GetType(), collection.Count);
-        }
-        internal static Exception TablesIsNotParent(ICollection collection)
-        {
-            return ParametersIsNotParent(typeof(DataTableMapping), collection);
-        }
-        internal static Exception TablesIsParent(ICollection collection)
-        {
-            return ParametersIsParent(typeof(DataTableMapping), collection);
-        }
-        internal static Exception TablesSourceIndex(string srcTable)
-        {
-            return CollectionIndexString(typeof(DataTableMapping), ADP.SourceTable, srcTable, typeof(DataTableMappingCollection));
-        }
-        internal static Exception TablesUniqueSourceTable(string srcTable)
-        {
-            return CollectionUniqueValue(typeof(DataTableMapping), ADP.SourceTable, srcTable);
-        }
-        internal static Exception NotADataTableMapping(object value)
-        {
-            return CollectionInvalidType(typeof(DataTableMappingCollection), typeof(DataTableMapping), value);
-        }
-
         //
         // IDbCommand
         //
-
-        internal static InvalidOperationException CommandAsyncOperationCompleted()
-        {
-            return InvalidOperation(Res.GetString(Res.SQL_AsyncOperationCompleted));
-        }
-
         internal static Exception CommandTextRequired(string method)
         {
             return InvalidOperation(Res.GetString(Res.ADP_CommandTextRequired, method));
@@ -1293,99 +608,6 @@ namespace System.Data.Common
         }
 
 
-        internal static InvalidOperationException UpdateConnectionRequired(StatementType statementType, bool isRowUpdatingCommand)
-        {
-            string resource;
-            if (isRowUpdatingCommand)
-            {
-                resource = Res.ADP_ConnectionRequired_Clone;
-            }
-            else
-            {
-                switch (statementType)
-                {
-                    case StatementType.Insert:
-                        resource = Res.ADP_ConnectionRequired_Insert;
-                        break;
-                    case StatementType.Update:
-                        resource = Res.ADP_ConnectionRequired_Update;
-                        break;
-                    case StatementType.Delete:
-                        resource = Res.ADP_ConnectionRequired_Delete;
-                        break;
-                    case StatementType.Batch:
-                        resource = Res.ADP_ConnectionRequired_Batch;
-                        goto default;
-#if DEBUG
-                    case StatementType.Select:
-                        Debug.Assert(false, "shouldn't be here");
-                        goto default;
-#endif
-                    default:
-                        throw ADP.InvalidStatementType(statementType);
-                }
-            }
-            return InvalidOperation(Res.GetString(resource));
-        }
-
-        internal static InvalidOperationException ConnectionRequired_Res(string method)
-        {
-            string resource = "ADP_ConnectionRequired_" + method;
-#if DEBUG
-            switch (resource)
-            {
-                case Res.ADP_ConnectionRequired_Fill:
-                case Res.ADP_ConnectionRequired_FillPage:
-                case Res.ADP_ConnectionRequired_FillSchema:
-                case Res.ADP_ConnectionRequired_Update:
-                case Res.ADP_ConnecitonRequired_UpdateRows:
-                    break;
-                default:
-                    Debug.Assert(false, "missing resource string: " + resource);
-                    break;
-            }
-#endif
-            return InvalidOperation(Res.GetString(resource));
-        }
-        internal static InvalidOperationException UpdateOpenConnectionRequired(StatementType statementType, bool isRowUpdatingCommand, ConnectionState state)
-        {
-            string resource;
-            if (isRowUpdatingCommand)
-            {
-                resource = Res.ADP_OpenConnectionRequired_Clone;
-            }
-            else
-            {
-                switch (statementType)
-                {
-                    case StatementType.Insert:
-                        resource = Res.ADP_OpenConnectionRequired_Insert;
-                        break;
-                    case StatementType.Update:
-                        resource = Res.ADP_OpenConnectionRequired_Update;
-                        break;
-                    case StatementType.Delete:
-                        resource = Res.ADP_OpenConnectionRequired_Delete;
-                        break;
-#if DEBUG
-                    case StatementType.Select:
-                        Debug.Assert(false, "shouldn't be here");
-                        goto default;
-                    case StatementType.Batch:
-                        Debug.Assert(false, "isRowUpdatingCommand should have been true");
-                        goto default;
-#endif
-                    default:
-                        throw ADP.InvalidStatementType(statementType);
-                }
-            }
-            return InvalidOperation(Res.GetString(resource, ADP.ConnectionStateMsg(state)));
-        }
-
-        internal static Exception NoStoredProcedureExists(string sproc)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_NoStoredProcedureExists, sproc));
-        }
         internal static Exception OpenReaderExists()
         {
             return OpenReaderExists(null);
@@ -1396,11 +618,6 @@ namespace System.Data.Common
             return InvalidOperation(Res.GetString(Res.ADP_OpenReaderExists), e);
         }
 
-        internal static Exception TransactionCompleted()
-        {
-            return DataAdapter(Res.GetString(Res.ADP_TransactionCompleted));
-        }
-
         //
         // DbDataReader
         //
@@ -1409,195 +626,9 @@ namespace System.Data.Common
             return InvalidOperation(Res.GetString(Res.ADP_NonSeqByteAccess, badIndex.ToString(CultureInfo.InvariantCulture), currIndex.ToString(CultureInfo.InvariantCulture), method));
         }
 
-        internal static Exception NegativeParameter(string parameterName)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_NegativeParameter, parameterName));
-        }
-
         internal static Exception NumericToDecimalOverflow()
         {
             return InvalidCast(Res.GetString(Res.ADP_NumericToDecimalOverflow));
-        }
-
-        //
-        // Stream, SqlTypes, SqlClient
-        //
-
-        internal static Exception ExceedsMaxDataLength(long specifiedLength, long maxLength)
-        {
-            return IndexOutOfRange(Res.GetString(Res.SQL_ExceedsMaxDataLength, specifiedLength.ToString(CultureInfo.InvariantCulture), maxLength.ToString(CultureInfo.InvariantCulture)));
-        }
-
-        internal static Exception InvalidSeekOrigin(string parameterName)
-        {
-            return ArgumentOutOfRange(Res.GetString(Res.ADP_InvalidSeekOrigin), parameterName);
-        }
-
-        //
-        // SqlMetaData, SqlTypes, SqlClient
-        //
-        internal static Exception InvalidImplicitConversion(Type fromtype, string totype)
-        {
-            return InvalidCast(Res.GetString(Res.ADP_InvalidImplicitConversion, fromtype.Name, totype));
-        }
-        internal static Exception InvalidMetaDataValue()
-        {
-            return ADP.Argument(Res.GetString(Res.ADP_InvalidMetaDataValue));
-        }
-
-        internal static Exception NotRowType()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_NotRowType));
-        }
-
-        //
-        // DbDataAdapter
-        //
-        internal static ArgumentException UnwantedStatementType(StatementType statementType)
-        {
-            return Argument(Res.GetString(Res.ADP_UnwantedStatementType, statementType.ToString()));
-        }
-        internal static InvalidOperationException NonSequentialColumnAccess(int badCol, int currCol)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_NonSequentialColumnAccess, badCol.ToString(CultureInfo.InvariantCulture), currCol.ToString(CultureInfo.InvariantCulture)));
-        }
-
-        //
-        // DbDataAdapter.FillSchema
-        //
-        internal static Exception FillSchemaRequiresSourceTableName(string parameter)
-        {
-            return Argument(Res.GetString(Res.ADP_FillSchemaRequiresSourceTableName), parameter);
-        }
-
-        //
-        // DbDataAdapter.Fill
-        //
-        internal static Exception InvalidMaxRecords(string parameter, int max)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidMaxRecords, max.ToString(CultureInfo.InvariantCulture)), parameter);
-        }
-        internal static Exception InvalidStartRecord(string parameter, int start)
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidStartRecord, start.ToString(CultureInfo.InvariantCulture)), parameter);
-        }
-        internal static Exception FillRequires(string parameter)
-        {
-            return ArgumentNull(parameter);
-        }
-        internal static Exception FillRequiresSourceTableName(string parameter)
-        {
-            return Argument(Res.GetString(Res.ADP_FillRequiresSourceTableName), parameter);
-        }
-        internal static Exception FillChapterAutoIncrement()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_FillChapterAutoIncrement));
-        }
-        internal static InvalidOperationException MissingDataReaderFieldType(int index)
-        {
-            return DataAdapter(Res.GetString(Res.ADP_MissingDataReaderFieldType, index));
-        }
-        internal static InvalidOperationException OnlyOneTableForStartRecordOrMaxRecords()
-        {
-            return DataAdapter(Res.GetString(Res.ADP_OnlyOneTableForStartRecordOrMaxRecords));
-        }
-        //
-        // DbDataAdapter.Update
-        //
-        internal static ArgumentNullException UpdateRequiresNonNullDataSet(string parameter)
-        {
-            return ArgumentNull(parameter);
-        }
-        internal static InvalidOperationException UpdateRequiresSourceTable(string defaultSrcTableName)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_UpdateRequiresSourceTable, defaultSrcTableName));
-        }
-        internal static InvalidOperationException UpdateRequiresSourceTableName(string srcTable)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_UpdateRequiresSourceTableName, srcTable)); // MDAC 70448
-        }
-        internal static ArgumentNullException UpdateRequiresDataTable(string parameter)
-        {
-            return ArgumentNull(parameter);
-        }
-
-        internal static Exception UpdateConcurrencyViolation(StatementType statementType, int affected, int expected, DataRow[] dataRows)
-        {
-            string resource;
-            switch (statementType)
-            {
-                case StatementType.Update:
-                    resource = Res.ADP_UpdateConcurrencyViolation_Update;
-                    break;
-                case StatementType.Delete:
-                    resource = Res.ADP_UpdateConcurrencyViolation_Delete;
-                    break;
-                case StatementType.Batch:
-                    resource = Res.ADP_UpdateConcurrencyViolation_Batch;
-                    break;
-#if DEBUG
-                case StatementType.Select:
-                case StatementType.Insert:
-                    Debug.Assert(false, "should be here");
-                    goto default;
-#endif
-                default:
-                    throw ADP.InvalidStatementType(statementType);
-            }
-            DBConcurrencyException exception = new DBConcurrencyException(Res.GetString(resource, affected.ToString(CultureInfo.InvariantCulture), expected.ToString(CultureInfo.InvariantCulture)), null, dataRows);
-            TraceExceptionAsReturnValue(exception);
-            return exception;
-        }
-
-        internal static InvalidOperationException UpdateRequiresCommand(StatementType statementType, bool isRowUpdatingCommand)
-        {
-            string resource;
-            if (isRowUpdatingCommand)
-            {
-                resource = Res.ADP_UpdateRequiresCommandClone;
-            }
-            else
-            {
-                switch (statementType)
-                {
-                    case StatementType.Select:
-                        resource = Res.ADP_UpdateRequiresCommandSelect;
-                        break;
-                    case StatementType.Insert:
-                        resource = Res.ADP_UpdateRequiresCommandInsert;
-                        break;
-                    case StatementType.Update:
-                        resource = Res.ADP_UpdateRequiresCommandUpdate;
-                        break;
-                    case StatementType.Delete:
-                        resource = Res.ADP_UpdateRequiresCommandDelete;
-                        break;
-#if DEBUG
-                    case StatementType.Batch:
-                        Debug.Assert(false, "isRowUpdatingCommand should have been true");
-                        goto default;
-#endif
-                    default:
-                        throw ADP.InvalidStatementType(statementType);
-                }
-            }
-            return InvalidOperation(Res.GetString(resource));
-        }
-        internal static ArgumentException UpdateMismatchRowTable(int i)
-        {
-            return Argument(Res.GetString(Res.ADP_UpdateMismatchRowTable, i.ToString(CultureInfo.InvariantCulture)));
-        }
-        internal static DataException RowUpdatedErrors()
-        {
-            return Data(Res.GetString(Res.ADP_RowUpdatedErrors));
-        }
-        internal static DataException RowUpdatingErrors()
-        {
-            return Data(Res.GetString(Res.ADP_RowUpdatingErrors));
-        }
-        internal static InvalidOperationException ResultsNotAllowedDuringBatch()
-        {
-            return DataAdapter(Res.GetString(Res.ADP_ResultsNotAllowedDuringBatch));
         }
 
         //
@@ -1776,66 +807,6 @@ namespace System.Data.Common
         internal static InvalidOperationException AsyncOperationPending()
         {
             return InvalidOperation(Res.GetString(Res.ADP_PendingAsyncOperation));
-        }
-
-        //
-        // : Stream
-        //
-        internal static Exception StreamClosed(string method)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_StreamClosed, method));
-        }
-        internal static IOException ErrorReadingFromStream(Exception internalException)
-        {
-            return IO(Res.GetString(Res.SqlMisc_StreamErrorMessage), internalException);
-        }
-
-        //
-        // : DbDataAdapter
-        //
-        internal static InvalidOperationException DynamicSQLJoinUnsupported()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLJoinUnsupported));
-        }
-        internal static InvalidOperationException DynamicSQLNoTableInfo()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNoTableInfo));
-        }
-        internal static InvalidOperationException DynamicSQLNoKeyInfoDelete()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNoKeyInfoDelete));
-        }
-        internal static InvalidOperationException DynamicSQLNoKeyInfoUpdate()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNoKeyInfoUpdate));
-        }
-        internal static InvalidOperationException DynamicSQLNoKeyInfoRowVersionDelete()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNoKeyInfoRowVersionDelete));
-        }
-        internal static InvalidOperationException DynamicSQLNoKeyInfoRowVersionUpdate()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNoKeyInfoRowVersionUpdate));
-        }
-        internal static InvalidOperationException DynamicSQLNestedQuote(string name, string quote)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_DynamicSQLNestedQuote, name, quote));
-        }
-        internal static InvalidOperationException NoQuoteChange()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_NoQuoteChange));
-        }
-        internal static InvalidOperationException ComputerNameEx(int lastError)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_ComputerNameEx, lastError));
-        }
-        internal static InvalidOperationException MissingSourceCommand()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_MissingSourceCommand));
-        }
-        internal static InvalidOperationException MissingSourceCommandConnection()
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_MissingSourceCommandConnection));
         }
 
         //
@@ -2054,22 +1025,6 @@ namespace System.Data.Common
         //
         // : CommandBuilder
         //
-
-        internal static InvalidOperationException InvalidDateTimeDigits(string dataTypeName)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_InvalidDateTimeDigits, dataTypeName));
-        }
-
-        internal static Exception InvalidFormatValue()
-        {
-            return Argument(Res.GetString(Res.ADP_InvalidFormatValue));
-        }
-
-        internal static InvalidOperationException InvalidMaximumScale(string dataTypeName)
-        {
-            return InvalidOperation(Res.GetString(Res.ADP_InvalidMaximumScale, dataTypeName));
-        }
-
         internal static Exception LiteralValueIsInvalid(string dataTypeName)
         {
             return Argument(Res.GetString(Res.ADP_LiteralValueIsInvalid, dataTypeName));
@@ -2212,58 +1167,6 @@ namespace System.Data.Common
             return null;
         }
 
-        internal static readonly bool IsWindowsNT = (PlatformID.Win32NT == Environment.OSVersion.Platform);
-        internal static readonly bool IsPlatformNT5 = (ADP.IsWindowsNT && (Environment.OSVersion.Version.Major >= 5));
-
-        internal static SysTx.Transaction GetCurrentTransaction()
-        {
-            SysTx.Transaction transaction = SysTx.Transaction.Current;
-            return transaction;
-        }
-
-        internal static void SetCurrentTransaction(SysTx.Transaction transaction)
-        {
-            SysTx.Transaction.Current = transaction;
-        }
-
-        internal static SysTx.IDtcTransaction GetOletxTransaction(SysTx.Transaction transaction)
-        {
-            SysTx.IDtcTransaction oleTxTransaction = null;
-
-            if (null != transaction)
-            {
-                oleTxTransaction = SysTx.TransactionInterop.GetDtcTransaction(transaction);
-            }
-            return oleTxTransaction;
-        }
-
-        //[System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        //static internal bool IsSysTxEqualSysEsTransaction()
-        //{
-        //    // This Method won't JIT inproc (ES isn't available), so we code it
-        //    // separately and call it behind an if statement.
-        //    bool result = (!SysES.ContextUtil.IsInTransaction && null == SysTx.Transaction.Current)
-        //               || (SysES.ContextUtil.IsInTransaction && SysTx.Transaction.Current == (SysTx.Transaction)SysES.ContextUtil.SystemTransaction);
-        //    return result;
-        //}
-
-        //static internal bool NeedManualEnlistment()
-        //{
-        //    // We need to force a manual enlistment of transactions for ODBC and
-        //    // OLEDB whenever the current SysTx transaction != the SysTx transaction
-        //    // on the EnterpriseServices ContextUtil, or when ES.ContextUtil is
-        //    // not available and there is a non-null current SysTx transaction.
-        //    if (IsWindowsNT)
-        //    { // we can reference SysTx just not use it on Win9X, we can't ever reference SysES on Win9X
-        //        bool isEnterpriseServicesOK = !InOutOfProcHelper.InProc;
-        //        if ((isEnterpriseServicesOK && !IsSysTxEqualSysEsTransaction())
-        //         || (!isEnterpriseServicesOK && null != SysTx.Transaction.Current))
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
         internal static bool NeedManualEnlistment()
         {
             return false;
@@ -2328,62 +1231,6 @@ namespace System.Data.Common
             return result;
         }
 
-        [EnvironmentPermission(SecurityAction.Assert, Read = "COMPUTERNAME")]
-        internal static string MachineName()
-        {
-            // Note: In Longhorn you'll be able to rename a machine without
-            // rebooting.  Therefore, don't cache this machine name.
-            return Environment.MachineName;
-        }
-
-        internal static string BuildQuotedString(string quotePrefix, string quoteSuffix, string unQuotedString)
-        {
-            StringBuilder resultString = new StringBuilder();
-            if (ADP.IsEmpty(quotePrefix) == false)
-            {
-                resultString.Append(quotePrefix);
-            }
-
-            // Assuming that the suffix is escaped by doubling it. i.e. foo"bar becomes "foo""bar".
-            if (ADP.IsEmpty(quoteSuffix) == false)
-            {
-                resultString.Append(unQuotedString.Replace(quoteSuffix, quoteSuffix + quoteSuffix));
-                resultString.Append(quoteSuffix);
-            }
-            else
-            {
-                resultString.Append(unQuotedString);
-            }
-
-            return resultString.ToString();
-        }
-
-        private static readonly string s_hexDigits = "0123456789abcdef";
-
-        internal static byte[] ByteArrayFromString(string hexString, string dataTypeName)
-        {
-            if ((hexString.Length & 0x1) != 0)
-            {
-                throw ADP.LiteralValueIsInvalid(dataTypeName);
-            }
-            char[] c = hexString.ToCharArray();
-            byte[] b = new byte[hexString.Length / 2];
-
-            CultureInfo invariant = CultureInfo.InvariantCulture;
-            for (int i = 0; i < hexString.Length; i += 2)
-            {
-                int h = s_hexDigits.IndexOf(Char.ToLower(c[i], invariant));
-                int l = s_hexDigits.IndexOf(Char.ToLower(c[i + 1], invariant));
-
-                if (h < 0 || l < 0)
-                {
-                    throw ADP.LiteralValueIsInvalid(dataTypeName);
-                }
-                b[i / 2] = (byte)((h << 4) | l);
-            }
-            return b;
-        }
-
         internal static void EscapeSpecialCharacters(string unescapedString, StringBuilder escapedString)
         {
             // note special characters list is from character escapes
@@ -2404,37 +1251,6 @@ namespace System.Data.Common
 
 
 
-
-        internal static string FixUpDecimalSeparator(string numericString,
-                                                     Boolean formatLiteral,
-                                                     string decimalSeparator,
-                                                     char[] exponentSymbols)
-        {
-            String returnString;
-            // don't replace the decimal separator if the string is in exponent format
-            if (numericString.IndexOfAny(exponentSymbols) == -1)
-            {
-                // if the user has set a decimal separator use it, if not use the current culture's value
-                if (ADP.IsEmpty(decimalSeparator) == true)
-                {
-                    decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-                }
-                if (formatLiteral == true)
-                {
-                    returnString = numericString.Replace(".", decimalSeparator);
-                }
-                else
-                {
-                    returnString = numericString.Replace(decimalSeparator, ".");
-                }
-            }
-            else
-            {
-                returnString = numericString;
-            }
-            return returnString;
-        }
-
         //[FileIOPermission(SecurityAction.Assert, AllFiles = FileIOPermissionAccess.PathDiscovery)]
         [ResourceExposure(ResourceScope.Machine)]
         [ResourceConsumption(ResourceScope.Machine)]
@@ -2443,448 +1259,9 @@ namespace System.Data.Common
             return Path.GetFullPath(filename);
         }
 
-        // 
-        //static internal string GetComputerNameDnsFullyQualified()
-        //{
-        //    const int ComputerNameDnsFullyQualified = 3; // winbase.h, enum COMPUTER_NAME_FORMAT
-        //    const int ERROR_MORE_DATA = 234; // winerror.h
-
-        //    string value;
-        //    if (IsPlatformNT5)
-        //    {
-        //        int length = 0; // length parameter must be zero if buffer is null
-        //        // query for the required length
-        //        // VSTFDEVDIV 479551 - ensure that GetComputerNameEx does not fail with unexpected values and that the length is positive
-        //        int getComputerNameExError = 0;
-        //        if (0 == SafeNativeMethods.GetComputerNameEx(ComputerNameDnsFullyQualified, null, ref length))
-        //        {
-        //            getComputerNameExError = Marshal.GetLastWin32Error();
-        //        }
-        //        if ((getComputerNameExError != 0 && getComputerNameExError != ERROR_MORE_DATA) || length <= 0)
-        //        {
-        //            throw ADP.ComputerNameEx(getComputerNameExError);
-        //        }
-
-        //        StringBuilder buffer = new StringBuilder(length);
-        //        length = buffer.Capacity;
-        //        if (0 == SafeNativeMethods.GetComputerNameEx(ComputerNameDnsFullyQualified, buffer, ref length))
-        //        {
-        //            throw ADP.ComputerNameEx(Marshal.GetLastWin32Error());
-        //        }
-
-        //        // Note: In Longhorn you'll be able to rename a machine without
-        //        // rebooting.  Therefore, don't cache this machine name.
-        //        value = buffer.ToString();
-        //    }
-        //    else
-        //    {
-        //        value = ADP.MachineName();
-        //    }
-        //    return value;
-        //}
-
-
-        //// SxS: the file is opened in FileShare.Read mode allowing several threads/apps to read it simultaneously
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal Stream GetFileStream(string filename)
-        //{
-        //    (new FileIOPermission(FileIOPermissionAccess.Read, filename)).Assert();
-        //    try
-        //    {
-        //        return new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-        //    }
-        //    finally
-        //    {
-        //        FileIOPermission.RevertAssert();
-        //    }
-        //}
-
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal FileVersionInfo GetVersionInfo(string filename)
-        //{
-        //    (new FileIOPermission(FileIOPermissionAccess.Read, filename)).Assert(); // MDAC 62038
-        //    try
-        //    {
-        //        return FileVersionInfo.GetVersionInfo(filename); // MDAC 60411
-        //    }
-        //    finally
-        //    {
-        //        FileIOPermission.RevertAssert();
-        //    }
-        //}
-
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal Stream GetXmlStreamFromValues(String[] values, String errorString)
-        //{
-        //    if (values.Length != 1)
-        //    {
-        //        throw ADP.ConfigWrongNumberOfValues(errorString);
-        //    }
-        //    return ADP.GetXmlStream(values[0], errorString);
-        //}
-
-        //// SxS (VSDD 545786): metadata files are opened from <.NetRuntimeFolder>\CONFIG\<metadatafilename.xml>
-        //// this operation is safe in SxS because the file is opened in read-only mode and each NDP runtime accesses its own copy of the metadata
-        //// under the runtime folder.
-        //// This method returns stream to open file, so its ResourceExposure value is ResourceScope.Machine.
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal Stream GetXmlStream(String value, String errorString)
-        //{
-        //    Stream XmlStream;
-        //    const string config = "config\\";
-        //    // get location of config directory
-        //    string rootPath = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory();
-        //    if (rootPath == null)
-        //    {
-        //        throw ADP.ConfigUnableToLoadXmlMetaDataFile(errorString);
-        //    }
-        //    StringBuilder tempstring = new StringBuilder(rootPath.Length + config.Length + value.Length);
-        //    tempstring.Append(rootPath);
-        //    tempstring.Append(config);
-        //    tempstring.Append(value);
-        //    String fullPath = tempstring.ToString();
-
-        //    // don't allow relative paths
-        //    if (ADP.GetFullPath(fullPath) != fullPath)
-        //    {
-        //        throw ADP.ConfigUnableToLoadXmlMetaDataFile(errorString);
-        //    }
-
-        //    try
-        //    {
-        //        XmlStream = ADP.GetFileStream(fullPath);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        // 
-        //        if (!ADP.IsCatchableExceptionType(e))
-        //        {
-        //            throw;
-        //        }
-        //        throw ADP.ConfigUnableToLoadXmlMetaDataFile(errorString);
-        //    }
-
-        //    return XmlStream;
-
-        //}
-
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal object ClassesRootRegistryValue(string subkey, string queryvalue)
-        //{ // MDAC 77697
-        //    (new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_CLASSES_ROOT\\" + subkey)).Assert(); // MDAC 62028
-        //    try
-        //    {
-        //        using (RegistryKey key = Registry.ClassesRoot.OpenSubKey(subkey, false))
-        //        {
-        //            return ((null != key) ? key.GetValue(queryvalue) : null);
-        //        }
-        //    }
-        //    catch (SecurityException e)
-        //    {
-        //        // Even though we assert permission - it's possible there are
-        //        // ACL's on registry that cause SecurityException to be thrown.
-        //        ADP.TraceExceptionWithoutRethrow(e);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        RegistryPermission.RevertAssert();
-        //    }
-        //}
-
-        //[ResourceExposure(ResourceScope.Machine)]
-        //[ResourceConsumption(ResourceScope.Machine)]
-        //static internal object LocalMachineRegistryValue(string subkey, string queryvalue)
-        //{ // MDAC 77697
-        //    (new RegistryPermission(RegistryPermissionAccess.Read, "HKEY_LOCAL_MACHINE\\" + subkey)).Assert(); // MDAC 62028
-        //    try
-        //    {
-        //        using (RegistryKey key = Registry.LocalMachine.OpenSubKey(subkey, false))
-        //        {
-        //            return ((null != key) ? key.GetValue(queryvalue) : null);
-        //        }
-        //    }
-        //    catch (SecurityException e)
-        //    {
-        //        // Even though we assert permission - it's possible there are
-        //        // ACL's on registry that cause SecurityException to be thrown.
-        //        ADP.TraceExceptionWithoutRethrow(e);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        RegistryPermission.RevertAssert();
-        //    }
-        //}
-
-        //// SxS: although this method uses registry, it does not expose anything out
-        //[ResourceExposure(ResourceScope.None)]
-        //[ResourceConsumption(ResourceScope.Machine, ResourceScope.Machine)]
-        //static internal void CheckVersionMDAC(bool ifodbcelseoledb)
-        //{
-        //    int major, minor, build;
-        //    string version;
-
-        //    try
-        //    {
-        //        version = (string)ADP.LocalMachineRegistryValue("Software\\Microsoft\\DataAccess", "FullInstallVer");
-        //        if (ADP.IsEmpty(version))
-        //        {
-        //            string filename = (string)ADP.ClassesRootRegistryValue(System.Data.OleDb.ODB.DataLinks_CLSID, ADP.StrEmpty);
-        //            FileVersionInfo versionInfo = ADP.GetVersionInfo(filename); // MDAC 60411
-        //            major = versionInfo.FileMajorPart;
-        //            minor = versionInfo.FileMinorPart;
-        //            build = versionInfo.FileBuildPart;
-        //            version = versionInfo.FileVersion;
-        //        }
-        //        else
-        //        {
-        //            string[] parts = version.Split('.');
-        //            major = Int32.Parse(parts[0], NumberStyles.None, CultureInfo.InvariantCulture);
-        //            minor = Int32.Parse(parts[1], NumberStyles.None, CultureInfo.InvariantCulture);
-        //            build = Int32.Parse(parts[2], NumberStyles.None, CultureInfo.InvariantCulture);
-        //            Int32.Parse(parts[3], NumberStyles.None, CultureInfo.InvariantCulture);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        // 
-        //        if (!ADP.IsCatchableExceptionType(e))
-        //        {
-        //            throw;
-        //        }
-
-        //        throw System.Data.OleDb.ODB.MDACNotAvailable(e);
-        //    }
-
-        //    // disallow any MDAC version before MDAC 2.6 rtm
-        //    // include MDAC 2.51 that ships with Win2k
-        //    if ((major < 2) || ((major == 2) && ((minor < 60) || ((minor == 60) && (build < 6526)))))
-        //    { // MDAC 66628
-        //        if (ifodbcelseoledb)
-        //        {
-        //            throw ADP.DataAdapter(Res.GetString(Res.Odbc_MDACWrongVersion, version));
-        //        }
-        //        else
-        //        {
-        //            throw ADP.DataAdapter(Res.GetString(Res.OleDb_MDACWrongVersion, version));
-        //        }
-        //    }
-        //}
-
-        // the return value is true if the string was quoted and false if it was not
-        // this allows the caller to determine if it is an error or not for the quotedString to not be quoted
-        internal static Boolean RemoveStringQuotes(string quotePrefix, string quoteSuffix, string quotedString, out string unquotedString)
-        {
-            int prefixLength;
-            if (quotePrefix == null)
-            {
-                prefixLength = 0;
-            }
-            else
-            {
-                prefixLength = quotePrefix.Length;
-            }
-
-            int suffixLength;
-            if (quoteSuffix == null)
-            {
-                suffixLength = 0;
-            }
-            else
-            {
-                suffixLength = quoteSuffix.Length;
-            }
-
-            if ((suffixLength + prefixLength) == 0)
-            {
-                unquotedString = quotedString;
-                return true;
-            }
-
-            if (quotedString == null)
-            {
-                unquotedString = quotedString;
-                return false;
-            }
-
-            int quotedStringLength = quotedString.Length;
-
-            // is the source string too short to be quoted
-            if (quotedStringLength < prefixLength + suffixLength)
-            {
-                unquotedString = quotedString;
-                return false;
-            }
-
-            // is the prefix present?
-            if (prefixLength > 0)
-            {
-                if (quotedString.StartsWith(quotePrefix, StringComparison.Ordinal) == false)
-                {
-                    unquotedString = quotedString;
-                    return false;
-                }
-            }
-
-            // is the suffix present?
-            if (suffixLength > 0)
-            {
-                if (quotedString.EndsWith(quoteSuffix, StringComparison.Ordinal) == false)
-                {
-                    unquotedString = quotedString;
-                    return false;
-                }
-                unquotedString = quotedString.Substring(prefixLength, quotedStringLength - (prefixLength + suffixLength)).Replace(quoteSuffix + quoteSuffix, quoteSuffix);
-            }
-            else
-            {
-                unquotedString = quotedString.Substring(prefixLength, quotedStringLength - prefixLength);
-            }
-            return true;
-        }
-
-        internal static DataRow[] SelectAdapterRows(DataTable dataTable, bool sorted)
-        {
-            const DataRowState rowStates = DataRowState.Added | DataRowState.Deleted | DataRowState.Modified;
-
-            // equivalent to but faster than 'return dataTable.Select("", "", rowStates);'
-            int countAdded = 0, countDeleted = 0, countModifed = 0;
-            DataRowCollection rowCollection = dataTable.Rows;
-            foreach (DataRow dataRow in rowCollection)
-            {
-                switch (dataRow.RowState)
-                {
-                    case DataRowState.Added:
-                        countAdded++;
-                        break;
-                    case DataRowState.Deleted:
-                        countDeleted++;
-                        break;
-                    case DataRowState.Modified:
-                        countModifed++;
-                        break;
-                    default:
-                        Debug.Assert(0 == (rowStates & dataRow.RowState), "flagged RowState");
-                        break;
-                }
-            }
-            DataRow[] dataRows = new DataRow[countAdded + countDeleted + countModifed];
-            if (sorted)
-            {
-                countModifed = countAdded + countDeleted;
-                countDeleted = countAdded;
-                countAdded = 0;
-
-                foreach (DataRow dataRow in rowCollection)
-                {
-                    switch (dataRow.RowState)
-                    {
-                        case DataRowState.Added:
-                            dataRows[countAdded++] = dataRow;
-                            break;
-                        case DataRowState.Deleted:
-                            dataRows[countDeleted++] = dataRow;
-                            break;
-                        case DataRowState.Modified:
-                            dataRows[countModifed++] = dataRow;
-                            break;
-                        default:
-                            Debug.Assert(0 == (rowStates & dataRow.RowState), "flagged RowState");
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                int index = 0;
-                foreach (DataRow dataRow in rowCollection)
-                {
-                    if (0 != (dataRow.RowState & rowStates))
-                    {
-                        dataRows[index++] = dataRow;
-                        if (index == dataRows.Length)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            return dataRows;
-        }
-
         internal static int StringLength(string inputString)
         {
             return ((null != inputString) ? inputString.Length : 0);
-        }
-
-        // { "a", "a", "a" } -> { "a", "a1", "a2" }
-        // { "a", "a", "a1" } -> { "a", "a2", "a1" }
-        // { "a", "A", "a" } -> { "a", "A1", "a2" }
-        // { "a", "A", "a1" } -> { "a", "A2", "a1" } // MDAC 66718
-        internal static void BuildSchemaTableInfoTableNames(string[] columnNameArray)
-        {
-            Dictionary<string, int> hash = new Dictionary<string, int>(columnNameArray.Length);
-
-            int startIndex = columnNameArray.Length; // lowest non-unique index
-            for (int i = columnNameArray.Length - 1; 0 <= i; --i)
-            {
-                string columnName = columnNameArray[i];
-                if ((null != columnName) && (0 < columnName.Length))
-                {
-                    columnName = columnName.ToLower(CultureInfo.InvariantCulture);
-                    int index;
-                    if (hash.TryGetValue(columnName, out index))
-                    {
-                        startIndex = Math.Min(startIndex, index);
-                    }
-                    hash[columnName] = i;
-                }
-                else
-                {
-                    columnNameArray[i] = ADP.StrEmpty; // MDAC 66681
-                    startIndex = i;
-                }
-            }
-            int uniqueIndex = 1;
-            for (int i = startIndex; i < columnNameArray.Length; ++i)
-            {
-                string columnName = columnNameArray[i];
-                if (0 == columnName.Length)
-                { // generate a unique name
-                    columnNameArray[i] = "Column";
-                    uniqueIndex = GenerateUniqueName(hash, ref columnNameArray[i], i, uniqueIndex);
-                }
-                else
-                {
-                    columnName = columnName.ToLower(CultureInfo.InvariantCulture);
-                    if (i != hash[columnName])
-                    {
-                        GenerateUniqueName(hash, ref columnNameArray[i], i, 1); // MDAC 66718
-                    }
-                }
-            }
-        }
-
-        private static int GenerateUniqueName(Dictionary<string, int> hash, ref string columnName, int index, int uniqueIndex)
-        {
-            for (; ; ++uniqueIndex)
-            {
-                string uniqueName = columnName + uniqueIndex.ToString(CultureInfo.InvariantCulture);
-                string lowerName = uniqueName.ToLower(CultureInfo.InvariantCulture); // MDAC 66978
-                if (!hash.ContainsKey(lowerName))
-                {
-                    columnName = uniqueName;
-                    hash.Add(lowerName, index);
-                    break;
-                }
-            }
-            return uniqueIndex;
         }
 
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.MayFail)]
@@ -2923,29 +1300,6 @@ namespace System.Data.Common
         { // this is null safe
             return CultureInfo.CurrentCulture.CompareInfo.Compare(strA, strB, ADP.compareOptions);
         }
-
-        internal static bool IsDirection(IDataParameter value, ParameterDirection condition)
-        {
-#if DEBUG
-            IsDirectionValid(condition);
-#endif
-            return (condition == (condition & value.Direction));
-        }
-#if DEBUG
-        private static void IsDirectionValid(ParameterDirection value)
-        {
-            switch (value)
-            { // @perfnote: Enum.IsDefined
-                case ParameterDirection.Input:
-                case ParameterDirection.Output:
-                case ParameterDirection.InputOutput:
-                case ParameterDirection.ReturnValue:
-                    break;
-                default:
-                    throw ADP.InvalidParameterDirection(value);
-            }
-        }
-#endif
 
         internal static bool IsEmpty(string str)
         {
@@ -2988,18 +1342,6 @@ namespace System.Data.Common
                     isSqlType = false;
                 }
             }
-        }
-
-        private static Version s_systemDataVersion;
-        internal static Version GetAssemblyVersion()
-        {
-            // NOTE: Using lazy thread-safety since we don't care if two threads both happen to update the value at the same time
-            if (s_systemDataVersion == null)
-            {
-                s_systemDataVersion = new Version(ThisAssembly.InformationalVersion);
-            }
-
-            return s_systemDataVersion;
         }
     }
 }
