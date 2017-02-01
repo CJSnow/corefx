@@ -36,7 +36,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public ParameterDirection Direction
+        public override ParameterDirection Direction
         {
             get
             {
@@ -63,7 +63,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public bool IsNullable
+        public override bool IsNullable
         {
             get
             {
@@ -92,7 +92,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public int Size
+        public override int Size
         {
             get
             {
@@ -123,7 +123,7 @@ namespace System.Data.Odbc
             return (0 != _size);
         }
 
-        override public string SourceColumn
+        public override string SourceColumn
         {
             get
             {
@@ -164,7 +164,7 @@ namespace System.Data.Odbc
             _parent = null;
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return ParameterName;
         }

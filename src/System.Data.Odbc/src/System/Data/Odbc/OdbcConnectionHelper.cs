@@ -133,7 +133,7 @@ namespace System.Data.Odbc
             InnerConnection.AddWeakReference(value, tag);
         }
 
-        override protected DbCommand CreateDbCommand()
+        protected override DbCommand CreateDbCommand()
         {
             DbCommand command = null;
             DbProviderFactory providerFactory = ConnectionFactory.ProviderFactory;
@@ -143,7 +143,7 @@ namespace System.Data.Odbc
         }
 
 
-        override protected void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

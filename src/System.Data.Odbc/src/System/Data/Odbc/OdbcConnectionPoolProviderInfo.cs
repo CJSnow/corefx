@@ -6,7 +6,7 @@ using System.Data.ProviderBase;
 
 namespace System.Data.Odbc
 {
-    sealed internal class OdbcConnectionPoolGroupProviderInfo : DbConnectionPoolGroupProviderInfo
+    internal sealed class OdbcConnectionPoolGroupProviderInfo : DbConnectionPoolGroupProviderInfo
     {
         private string _driverName;
         private string _driverVersion;

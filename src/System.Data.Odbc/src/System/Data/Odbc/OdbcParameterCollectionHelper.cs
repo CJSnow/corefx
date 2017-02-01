@@ -13,7 +13,7 @@ namespace System.Data.Odbc
     {
         private List<OdbcParameter> _items;
 
-        override public int Count
+        public override int Count
         {
             get
             {
@@ -37,7 +37,7 @@ namespace System.Data.Odbc
         }
 
 
-        override public object SyncRoot
+        public override object SyncRoot
         {
             get
             {
@@ -45,7 +45,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public int Add(object value)
+        public override int Add(object value)
         {
             OnChange();
             ValidateType(value);
@@ -54,7 +54,7 @@ namespace System.Data.Odbc
             return Count - 1;
         }
 
-        override public void AddRange(System.Array values)
+        public override void AddRange(System.Array values)
         {
             OnChange();
             if (null == values)
@@ -82,7 +82,7 @@ namespace System.Data.Odbc
             return index;
         }
 
-        override public void Clear()
+        public override void Clear()
         {
             OnChange();
             List<OdbcParameter> items = InnerList;
@@ -97,28 +97,28 @@ namespace System.Data.Odbc
             }
         }
 
-        override public bool Contains(object value)
+        public override bool Contains(object value)
         {
             return (-1 != IndexOf(value));
         }
 
-        override public void CopyTo(Array array, int index)
+        public override void CopyTo(Array array, int index)
         {
             ((System.Collections.ICollection)InnerList).CopyTo(array, index);
         }
 
-        override public System.Collections.IEnumerator GetEnumerator()
+        public override System.Collections.IEnumerator GetEnumerator()
         {
             return ((System.Collections.ICollection)InnerList).GetEnumerator();
         }
 
-        override protected DbParameter GetParameter(int index)
+        protected override DbParameter GetParameter(int index)
         {
             RangeCheck(index);
             return InnerList[index];
         }
 
-        override protected DbParameter GetParameter(string parameterName)
+        protected override DbParameter GetParameter(string parameterName)
         {
             int index = IndexOf(parameterName);
             if (index < 0)
@@ -156,12 +156,12 @@ namespace System.Data.Odbc
             return -1;
         }
 
-        override public int IndexOf(string parameterName)
+        public override int IndexOf(string parameterName)
         {
             return IndexOf(InnerList, parameterName);
         }
 
-        override public int IndexOf(object value)
+        public override int IndexOf(object value)
         {
             if (null != value)
             {
@@ -185,7 +185,7 @@ namespace System.Data.Odbc
             return -1;
         }
 
-        override public void Insert(int index, object value)
+        public override void Insert(int index, object value)
         {
             OnChange();
             ValidateType(value);
@@ -201,7 +201,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public void Remove(object value)
+        public override void Remove(object value)
         {
             OnChange();
             ValidateType(value);
@@ -216,14 +216,14 @@ namespace System.Data.Odbc
             }
         }
 
-        override public void RemoveAt(int index)
+        public override void RemoveAt(int index)
         {
             OnChange();
             RangeCheck(index);
             RemoveIndex(index);
         }
 
-        override public void RemoveAt(string parameterName)
+        public override void RemoveAt(string parameterName)
         {
             OnChange();
             int index = CheckName(parameterName);
@@ -250,14 +250,14 @@ namespace System.Data.Odbc
             item.ResetParent();
         }
 
-        override protected void SetParameter(int index, DbParameter value)
+        protected override void SetParameter(int index, DbParameter value)
         {
             OnChange();
             RangeCheck(index);
             Replace(index, value);
         }
 
-        override protected void SetParameter(string parameterName, DbParameter value)
+        protected override void SetParameter(string parameterName, DbParameter value)
         {
             OnChange();
             int index = IndexOf(parameterName);

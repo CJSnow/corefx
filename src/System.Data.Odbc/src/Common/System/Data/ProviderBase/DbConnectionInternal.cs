@@ -141,13 +141,13 @@ namespace System.Data.ProviderBase
             }
         }
 
-        abstract public string ServerVersion
+        public abstract string ServerVersion
         {
             get;
         }
 
         // this should be abstract but until it is added to all the providers virtual will have to do
-        virtual public string ServerVersionNormalized
+        public virtual string ServerVersionNormalized
         {
             get
             {
@@ -171,7 +171,7 @@ namespace System.Data.ProviderBase
             }
         }
 
-        abstract protected void Activate();
+        protected abstract void Activate();
 
         internal void ActivateConnection()
         {
@@ -200,9 +200,9 @@ namespace System.Data.ProviderBase
             _referenceCollection.Add(value, tag);
         }
 
-        abstract public DbTransaction BeginTransaction(IsolationLevel il);
+        public abstract DbTransaction BeginTransaction(IsolationLevel il);
 
-        virtual public void ChangeDatabase(string value)
+        public virtual void ChangeDatabase(string value)
         {
             throw ADP.MethodNotImplemented();
         }
@@ -304,32 +304,32 @@ namespace System.Data.ProviderBase
             }
         }
 
-        virtual internal void PrepareForReplaceConnection()
+        internal virtual void PrepareForReplaceConnection()
         {
             // By default, there is no preparation required
         }
 
-        virtual protected void PrepareForCloseConnection()
+        protected virtual void PrepareForCloseConnection()
         {
             // By default, there is no preparation required
         }
 
-        virtual protected object ObtainAdditionalLocksForClose()
+        protected virtual object ObtainAdditionalLocksForClose()
         {
             return null; // no additional locks in default implementation
         }
 
-        virtual protected void ReleaseAdditionalLocksForClose(object lockToken)
+        protected virtual void ReleaseAdditionalLocksForClose(object lockToken)
         {
             // no additional locks in default implementation
         }
 
-        virtual protected DbReferenceCollection CreateReferenceCollection()
+        protected virtual DbReferenceCollection CreateReferenceCollection()
         {
             throw ADP.InternalError(ADP.InternalErrorCode.AttemptingToConstructReferenceCollectionOnStaticObject);
         }
 
-        abstract protected void Deactivate();
+        protected abstract void Deactivate();
 
         internal void DeactivateConnection()
         {

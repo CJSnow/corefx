@@ -149,7 +149,7 @@ namespace System.Data.Odbc
             this.Value = value;
         }
 
-        override public System.Data.DbType DbType
+        public override System.Data.DbType DbType
         {
             get
             {
@@ -223,7 +223,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public string ParameterName
+        public override string ParameterName
         { // V1.2.3300, XXXParameter V1.0.3300
             get
             {
@@ -1087,7 +1087,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public object Value
+        public override object Value
         { // V1.2.3300, XXXParameter V1.0.3300
             get
             {

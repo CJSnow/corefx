@@ -27,7 +27,7 @@ namespace System.Data.Odbc
         Browsable(false),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
         ]
-        new public OdbcParameter this[int index]
+        public new OdbcParameter this[int index]
         {
             get
             {
@@ -43,7 +43,7 @@ namespace System.Data.Odbc
         Browsable(false),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
         ]
-        new public OdbcParameter this[string parameterName]
+        public new OdbcParameter this[string parameterName]
         {
             get
             {
@@ -136,7 +136,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public bool Contains(string value)
+        public override bool Contains(string value)
         { // WebData 97349
             return (-1 != IndexOf(value));
         }

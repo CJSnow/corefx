@@ -42,7 +42,7 @@ namespace System.Data.Odbc
             return new SQLLEN(value);
         }
 
-        public unsafe static implicit operator int (SQLLEN value)
+        public static unsafe implicit operator int (SQLLEN value)
         { // 
 #if WIN32
             return (int)value._value.ToInt32();
@@ -52,7 +52,7 @@ namespace System.Data.Odbc
 #endif
         }
 
-        public unsafe static explicit operator long (SQLLEN value)
+        public static unsafe explicit operator long (SQLLEN value)
         {
             return value._value.ToInt64();
         }
@@ -63,7 +63,7 @@ namespace System.Data.Odbc
         }
     }
 
-    sealed internal class OdbcStatementHandle : OdbcHandle
+    internal sealed class OdbcStatementHandle : OdbcHandle
     {
         internal OdbcStatementHandle(OdbcConnectionHandle connectionHandle) : base(ODBC32.SQL_HANDLE.STMT, connectionHandle)
         {

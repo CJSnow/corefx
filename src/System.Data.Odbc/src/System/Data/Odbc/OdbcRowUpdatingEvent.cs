@@ -25,7 +25,7 @@ namespace System.Data.Odbc
         {
         }
 
-        new public OdbcCommand Command
+        public new OdbcCommand Command
         {
             get { return (base.Command as OdbcCommand); }
             set
@@ -34,7 +34,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override protected IDbCommand BaseCommand
+        protected override IDbCommand BaseCommand
         {
             get { return base.BaseCommand; }
             set { base.BaseCommand = (value as OdbcCommand); }
@@ -52,7 +52,7 @@ namespace System.Data.Odbc
         {
         }
 
-        new public OdbcCommand Command
+        public new OdbcCommand Command
         {
             get { return (OdbcCommand)base.Command; }
         }
