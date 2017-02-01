@@ -2,17 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.Globalization;
+using System.Security;
+using System.Security.Permissions;
+
 namespace System.Data.Common
 {
-    using System.Collections;
-    using System.Data.Common;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Runtime.Serialization;
-    using System.Security;
-    using System.Security.Permissions;
-    using System.Text;
-
     [SecurityPermissionAttribute(SecurityAction.InheritanceDemand, ControlEvidence = true, ControlPolicy = true)]
     [Serializable]
     public abstract class DBDataPermission : CodeAccessPermission, IUnrestrictedPermission

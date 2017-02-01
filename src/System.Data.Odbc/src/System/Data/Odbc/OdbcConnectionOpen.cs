@@ -4,12 +4,8 @@
 
 // TODO[tinchou]: check override methods and System.Transactions usage
 
-using System;
-using System.Data;
 using System.Data.Common;
 using System.Data.ProviderBase;
-using System.Threading;
-//using SysTx = System.Transactions;
 
 namespace System.Data.Odbc
 {

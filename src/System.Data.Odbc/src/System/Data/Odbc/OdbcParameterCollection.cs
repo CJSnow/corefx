@@ -2,17 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Data.Common;
+
 namespace System.Data.Odbc
 {
-    using System;
-    using System.Collections;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Data.Common;
-    using System.Data.ProviderBase;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-
     public sealed partial class OdbcParameterCollection : DbParameterCollection
     {
         private bool _rebindCollection;   // The collection needs to be (re)bound

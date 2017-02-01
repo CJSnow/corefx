@@ -4,19 +4,15 @@
 
 // TODO[tinchou]: fix PermissionSet
 
+using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.Versioning;
+using System.Text;
+using System.Text.RegularExpressions;
+
 namespace System.Data.Common
 {
-    using System;
-    using System.Collections;
-    using System.Data;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Runtime.Serialization;
-    using System.Security.Permissions;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Runtime.Versioning;
-
     internal class DbConnectionOptions
     {
         // instances of this class are intended to be immutable, i.e readonly

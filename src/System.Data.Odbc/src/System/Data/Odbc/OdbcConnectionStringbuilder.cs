@@ -4,17 +4,11 @@
 
 // TODO[tinchou]: check OdbcConnectionStringBuilderConverter
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-using System.Text;
 
 namespace System.Data.Odbc
 {

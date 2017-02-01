@@ -4,18 +4,9 @@
 
 // TODO[tinchou]: check QuoteIdentifier and UnquoteIdentifier https://github.com/dotnet/corefx/blob/c5c75db7c00047d603522fd6e21f350099e09bbb/src/System.Data.Common/src/System/Data/Common/DBCommandBuilder.cs#L1487
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.Common;
-using System.Data.ProviderBase;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Globalization;
-using System.Text;
 
 namespace System.Data.Odbc
 {
