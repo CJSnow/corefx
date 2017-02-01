@@ -9,7 +9,7 @@ using System.Data.ProviderBase;
 
 namespace System.Data.Odbc
 {
-    sealed internal class OdbcConnectionOpen : DbConnectionInternal
+    internal sealed class OdbcConnectionOpen : DbConnectionInternal
     {
         // Construct from a compiled connection string
         internal OdbcConnectionOpen(OdbcConnection outerConnection, OdbcConnectionString connectionOptions)
@@ -49,7 +49,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public string ServerVersion
+        public override string ServerVersion
         {
             get
             {
@@ -61,11 +61,11 @@ namespace System.Data.Odbc
         //{
         //}
 
-        override protected void Activate()
+        protected override void Activate()
         {
         }
 
-        override public DbTransaction BeginTransaction(IsolationLevel isolevel)
+        public override DbTransaction BeginTransaction(IsolationLevel isolevel)
         {
             return BeginOdbcTransaction(isolevel);
         }
@@ -75,17 +75,17 @@ namespace System.Data.Odbc
             return OuterConnection.Open_BeginTransaction(isolevel);
         }
 
-        override public void ChangeDatabase(string value)
+        public override void ChangeDatabase(string value)
         {
             OuterConnection.Open_ChangeDatabase(value);
         }
 
-        override protected DbReferenceCollection CreateReferenceCollection()
+        protected override DbReferenceCollection CreateReferenceCollection()
         {
             return new OdbcReferenceCollection();
         }
 
-        override protected void Deactivate()
+        protected override void Deactivate()
         {
             NotifyWeakReference(OdbcReferenceCollection.Closing);
         }

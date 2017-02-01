@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace System.Data.ProviderBase
 {
-    abstract internal class DbConnectionClosed : DbConnectionInternal
+    internal abstract class DbConnectionClosed : DbConnectionInternal
     {
         // Construct an "empty" connection
         protected DbConnectionClosed(ConnectionState state, bool hidePassword, bool allowSetConnectionString) : base(state, hidePassword, allowSetConnectionString)
         {
         }
 
-        override public string ServerVersion
+        public override string ServerVersion
         {
             get
             {
@@ -23,17 +23,17 @@ namespace System.Data.ProviderBase
             }
         }
 
-        override protected void Activate()
+        protected override void Activate()
         {
             throw ADP.ClosedConnectionError();
         }
 
-        override public DbTransaction BeginTransaction(IsolationLevel il)
+        public override DbTransaction BeginTransaction(IsolationLevel il)
         {
             throw ADP.ClosedConnectionError();
         }
 
-        override public void ChangeDatabase(string database)
+        public override void ChangeDatabase(string database)
         {
             throw ADP.ClosedConnectionError();
         }
@@ -43,7 +43,7 @@ namespace System.Data.ProviderBase
             // not much to do here...
         }
 
-        override protected void Deactivate()
+        protected override void Deactivate()
         {
             throw ADP.ClosedConnectionError();
         }
@@ -60,7 +60,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    abstract internal class DbConnectionBusy : DbConnectionClosed
+    internal abstract class DbConnectionBusy : DbConnectionClosed
     {
         protected DbConnectionBusy(ConnectionState state) : base(state, true, false)
         {
@@ -72,7 +72,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    sealed internal class DbConnectionClosedBusy : DbConnectionBusy
+    internal sealed class DbConnectionClosedBusy : DbConnectionBusy
     {
         // Closed Connection, Currently Busy - changing connection string
         internal static readonly DbConnectionInternal SingletonInstance = new DbConnectionClosedBusy();   // singleton object
@@ -82,7 +82,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    sealed internal class DbConnectionOpenBusy : DbConnectionBusy
+    internal sealed class DbConnectionOpenBusy : DbConnectionBusy
     {
         // Open Connection, Currently Busy - closing connection
         internal static readonly DbConnectionInternal SingletonInstance = new DbConnectionOpenBusy();   // singleton object
@@ -92,7 +92,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    sealed internal class DbConnectionClosedConnecting : DbConnectionBusy
+    internal sealed class DbConnectionClosedConnecting : DbConnectionBusy
     {
         // Closed Connection, Currently Connecting
 
@@ -138,7 +138,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    sealed internal class DbConnectionClosedNeverOpened : DbConnectionClosed
+    internal sealed class DbConnectionClosedNeverOpened : DbConnectionClosed
     {
         // Closed Connection, Has Never Been Opened
 
@@ -149,7 +149,7 @@ namespace System.Data.ProviderBase
         }
     }
 
-    sealed internal class DbConnectionClosedPreviouslyOpened : DbConnectionClosed
+    internal sealed class DbConnectionClosedPreviouslyOpened : DbConnectionClosed
     {
         // Closed Connection, Has Previously Been Opened
 

@@ -13,7 +13,7 @@ using System.Collections.Concurrent;
 
 namespace System.Data.ProviderBase
 {
-    sealed internal class DbConnectionPool
+    internal sealed class DbConnectionPool
     {
         private enum State
         {

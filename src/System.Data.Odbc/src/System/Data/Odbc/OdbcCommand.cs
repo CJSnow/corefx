@@ -131,7 +131,7 @@ namespace System.Data.Odbc
         }
 
         // TODO[tinchou]: use this or the one in Helper, but not both
-        override protected void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         { // MDAC 65459
             if (disposing)
             {
@@ -155,7 +155,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public string CommandText
+        public override string CommandText
         {
             get
             {
@@ -172,7 +172,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override public int CommandTimeout
+        public override int CommandTimeout
         { // V1.2.3300, XXXCommand V1.0.5000
             get
             {
@@ -209,7 +209,7 @@ namespace System.Data.Odbc
         [
         DefaultValue(System.Data.CommandType.Text),
         ]
-        override public CommandType CommandType
+        public override CommandType CommandType
         {
             get
             {
@@ -233,7 +233,7 @@ namespace System.Data.Odbc
             }
         }
 
-        new public OdbcConnection Connection
+        public new OdbcConnection Connection
         {
             get
             {
@@ -252,7 +252,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override protected DbConnection DbConnection
+        protected override DbConnection DbConnection
         { // V1.2.3300
             get
             {
@@ -264,7 +264,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override protected DbParameterCollection DbParameterCollection
+        protected override DbParameterCollection DbParameterCollection
         { // V1.2.3300
             get
             {
@@ -272,7 +272,7 @@ namespace System.Data.Odbc
             }
         }
 
-        override protected DbTransaction DbTransaction
+        protected override DbTransaction DbTransaction
         { // V1.2.3300
             get
             {
@@ -318,7 +318,7 @@ namespace System.Data.Odbc
         [
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
         ]
-        new public OdbcParameterCollection Parameters
+        public new OdbcParameterCollection Parameters
         {
             get
             {
@@ -334,7 +334,7 @@ namespace System.Data.Odbc
         Browsable(false),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
         ]
-        new public OdbcTransaction Transaction
+        public new OdbcTransaction Transaction
         {
             get
             {
@@ -357,7 +357,7 @@ namespace System.Data.Odbc
         [
         DefaultValue(System.Data.UpdateRowSource.Both),
         ]
-        override public UpdateRowSource UpdatedRowSource
+        public override UpdateRowSource UpdatedRowSource
         { // V1.2.3300, XXXCommand V1.0.5000
             get
             {
@@ -431,7 +431,7 @@ namespace System.Data.Odbc
         // (ODBC Programmer's Reference ...)
         //
 
-        override public void Cancel()
+        public override void Cancel()
         {
             CMDWrapper wrapper = _cmdWrapper;
             if (null != wrapper)
@@ -527,22 +527,22 @@ namespace System.Data.Odbc
             _cmdState = ConnectionState.Closed;
         }
 
-        new public OdbcParameter CreateParameter()
+        public new OdbcParameter CreateParameter()
         {
             return new OdbcParameter();
         }
 
-        override protected DbParameter CreateDbParameter()
+        protected override DbParameter CreateDbParameter()
         {
             return CreateParameter();
         }
 
-        override protected DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
+        protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
         {
             return ExecuteReader(behavior);
         }
 
-        override public int ExecuteNonQuery()
+        public override int ExecuteNonQuery()
         {
             using (OdbcDataReader reader = ExecuteReaderObject(0, ADP.ExecuteNonQuery, false))
             {
@@ -551,13 +551,13 @@ namespace System.Data.Odbc
             }
         }
 
-        new public OdbcDataReader ExecuteReader()
+        public new OdbcDataReader ExecuteReader()
         {
             return ExecuteReader(0/*CommandBehavior*/);
         }
 
 
-        new public OdbcDataReader ExecuteReader(CommandBehavior behavior)
+        public new OdbcDataReader ExecuteReader(CommandBehavior behavior)
         {
             return ExecuteReaderObject(behavior, ADP.ExecuteReader, true);
         }
@@ -849,7 +849,7 @@ namespace System.Data.Odbc
             return localReader;
         }
 
-        override public object ExecuteScalar()
+        public override object ExecuteScalar()
         {
             object value = null;
             using (IDataReader reader = ExecuteReaderObject(0, ADP.ExecuteScalar, false))
@@ -883,7 +883,7 @@ namespace System.Data.Odbc
         // if the connection is not set
         // if the connection is not open
         //
-        override public void Prepare()
+        public override void Prepare()
         {
             ODBC32.RetCode retcode;
 
@@ -968,7 +968,7 @@ namespace System.Data.Odbc
             _cmdState = ConnectionState.Executing;
         }
     }
-    sealed internal class CMDWrapper
+    internal sealed class CMDWrapper
     {
         private OdbcStatementHandle _stmt;                  // hStmt
         private OdbcStatementHandle _keyinfostmt;           // hStmt for keyinfo

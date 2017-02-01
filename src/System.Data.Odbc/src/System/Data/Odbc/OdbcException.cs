@@ -15,7 +15,7 @@ namespace System.Data.Odbc
 
         private ODBC32.RETCODE _retcode;    // DO NOT REMOVE! only needed for serialization purposes, because Everett had it.
 
-        static internal OdbcException CreateException(OdbcErrorCollection errors, ODBC32.RetCode retcode)
+        internal static OdbcException CreateException(OdbcErrorCollection errors, ODBC32.RetCode retcode)
         {
             StringBuilder builder = new StringBuilder();
             foreach (OdbcError error in errors)
@@ -54,7 +54,7 @@ namespace System.Data.Odbc
         }
 
         [System.Security.Permissions.SecurityPermissionAttribute(System.Security.Permissions.SecurityAction.LinkDemand, Flags = System.Security.Permissions.SecurityPermissionFlag.SerializationFormatter)]
-        override public void GetObjectData(SerializationInfo si, StreamingContext context)
+        public override void GetObjectData(SerializationInfo si, StreamingContext context)
         {
             // MDAC 72003
             if (null == si)
@@ -67,7 +67,7 @@ namespace System.Data.Odbc
         }
 
         // mdac bug 62559 - if we don't have it return nothing (empty string)
-        override public string Source
+        public override string Source
         {
             get
             {

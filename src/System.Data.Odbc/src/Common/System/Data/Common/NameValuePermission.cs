@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace System.Data.Common
 {
     [Serializable] // MDAC 83147
-    sealed internal class NameValuePermission : IComparable
+    internal sealed class NameValuePermission : IComparable
     {
         // reused as both key and value nodes
         // key nodes link to value nodes
@@ -20,7 +20,7 @@ namespace System.Data.Common
 
         private NameValuePermission[] _tree; // with branches
 
-        static internal readonly NameValuePermission Default = null;// = new NameValuePermission(String.Empty, new string[] { "File Name" }, KeyRestrictionBehavior.AllowOnly);
+        internal static readonly NameValuePermission Default = null;// = new NameValuePermission(String.Empty, new string[] { "File Name" }, KeyRestrictionBehavior.AllowOnly);
 
         internal NameValuePermission()
         { // root node
@@ -61,7 +61,7 @@ namespace System.Data.Common
             return StringComparer.Ordinal.Compare(_value, ((NameValuePermission)a)._value);
         }
 
-        static internal void AddEntry(NameValuePermission kvtree, ArrayList entries, DBConnectionString entry)
+        internal static void AddEntry(NameValuePermission kvtree, ArrayList entries, DBConnectionString entry)
         {
             Debug.Assert(null != entry, "null DBConnectionString");
 
