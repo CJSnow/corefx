@@ -4,14 +4,11 @@
 
 // TODO[tinchou]: check KeyRestrictionBehavior
 
+using System.ComponentModel;
+using System.Security.Permissions;
+
 namespace System.Data.Common
 {
-    using System.ComponentModel;
-    using System.Data.Common;
-    using System.Diagnostics;
-    using System.Security;
-    using System.Security.Permissions;
-
     /* derived class pattern
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Assembly, AllowMultiple = true, Inherited = false )]
     [Serializable] sealed public class XPermissionAttribute : DBDataPermissionAttribute {

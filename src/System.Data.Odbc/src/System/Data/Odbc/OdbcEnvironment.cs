@@ -4,9 +4,6 @@
 
 // TODO[tinchou]: reenable ADP.CheckVersionMDAC
 
-using System;
-using System.Data;
-using System.Data.Common;
 using System.Threading;
 
 namespace System.Data.Odbc
@@ -48,4 +45,3 @@ namespace System.Data.Odbc
         }
     }
 }
-

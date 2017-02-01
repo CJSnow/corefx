@@ -4,17 +4,12 @@
 
 // TODO[tinchou]: check override methods
 
+using System.Data.Common;
+using System.Data.ProviderBase;
+using System.Diagnostics;
+
 namespace System.Data.Odbc
 {
-    using System;
-    using System.Data.Common;
-    using System.Data.ProviderBase;
-    using System.Diagnostics;
-    using System.Collections.Specialized;
-    using System.Configuration;
-    using System.IO;
-    using System.Runtime.Versioning;
-
     sealed internal class OdbcConnectionFactory : DbConnectionFactory
     {
         private OdbcConnectionFactory() : base() { }

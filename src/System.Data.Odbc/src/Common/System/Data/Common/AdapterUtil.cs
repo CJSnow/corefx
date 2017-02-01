@@ -9,28 +9,25 @@
 // TODO[tinchou]: FileIOPermission usages
 // TODO[tinchou]: check using SysES = System.EnterpriseServices;
 
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using System.Security;
+using System.Security.Permissions;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using SysTx = System.Transactions;
+
 namespace System.Data.Common
 {
-    using Microsoft.Win32;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlTypes;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.IO;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Security.Permissions;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using SysTx = System.Transactions;
-    using System.Runtime.Versioning;
-    using System.Runtime.CompilerServices;
-
     internal static class ADP
     {
         // The class ADP defines the exceptions that are specific to the Adapters.f

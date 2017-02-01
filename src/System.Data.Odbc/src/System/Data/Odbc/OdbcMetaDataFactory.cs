@@ -4,20 +4,14 @@
 
 // TODO[tinchou]: check protected override DataTable PrepareCollection(String collectionName, String[] restrictions, DbConnection connection)
 
+using System.IO;
+using System.Data.Common;
+using System.Data.ProviderBase;
+using System.Diagnostics;
+using System.Text;
+
 namespace System.Data.Odbc
 {
-    using System;
-    using System.Data;
-    using System.IO;
-    using System.Collections;
-    using System.Data.Common;
-    using System.Xml;
-    using System.Xml.Schema;
-    using System.Diagnostics;
-    using System.Data.ProviderBase;
-    using System.Text;
-
-
     internal class OdbcMetaDataFactory : DbMetaDataFactory
     {
         private struct SchemaFunctionName
@@ -1176,7 +1170,3 @@ namespace System.Data.Odbc
         }
     }
 }
-
-
-
-

@@ -7,20 +7,13 @@
 // TODO[tinchou]: Check EnlistedTransaction
 // TODO[tinchou]: SqlConnection removed the ICloneable implementation, and so did we
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Common;
-using System.Data.ProviderBase;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Security.Permissions;
 using System.Text;
-using System.Threading;
 using SysTx = System.Transactions;
 
 namespace System.Data.Odbc

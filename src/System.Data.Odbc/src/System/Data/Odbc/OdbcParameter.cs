@@ -5,17 +5,13 @@
 // TODO[tinchou]: check OdbcParameterConverter
 // TODO[tinchou]: SqlClient removed ICloneable and IDbDataParameter, an so did we
 
-using System;
 using System.ComponentModel;
-using System.Data;
 using System.Data.Common;
-using System.Data.ProviderBase;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 
 namespace System.Data.Odbc
 {
