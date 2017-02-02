@@ -17,7 +17,7 @@ namespace System.Data.Common
     }
 
 
-    [SuppressUnmanagedCodeSecurityAttribute()]
+    [SuppressUnmanagedCodeSecurity]
     internal static partial class UnsafeNativeMethods
     {
 
