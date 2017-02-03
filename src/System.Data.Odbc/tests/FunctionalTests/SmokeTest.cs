@@ -10,7 +10,7 @@ namespace System.Data.Odbc.Tests
             "Database=smoketests.sqlite;";
 
         [Fact]
-        public void SmokeTest()
+        public void CreateInsertSelectTest()
         {
             using (var dbcon = new OdbcConnection(connectionString))
             {
