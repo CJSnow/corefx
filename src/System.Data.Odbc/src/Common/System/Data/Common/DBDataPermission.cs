@@ -401,7 +401,7 @@ namespace System.Data.Common
 
                         tmp = value.ConnectionString; // WebData 97375
                         tmp = EncodeXmlValue(tmp);
-                        if (!ADP.IsEmpty(tmp))
+                        if (!string.IsNullOrEmpty(tmp))
                         {
                             valueElement.AddAttribute(XmlStr._ConnectionString, tmp);
                         }

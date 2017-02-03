@@ -38,7 +38,7 @@ namespace System.Data.Odbc
 
         protected override DbConnectionOptions CreateConnectionOptions(string connectionString, DbConnectionOptions previous)
         {
-            Debug.Assert(!ADP.IsEmpty(connectionString), "empty connectionString");
+            Debug.Assert(!string.IsNullOrEmpty(connectionString), "empty connectionString");
             OdbcConnectionString result = new OdbcConnectionString(connectionString, (null != previous));
             return result;
         }

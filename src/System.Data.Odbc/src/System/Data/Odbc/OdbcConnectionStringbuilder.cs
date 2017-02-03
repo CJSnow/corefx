@@ -54,7 +54,7 @@ namespace System.Data.Odbc
 
         public OdbcConnectionStringBuilder(string connectionString) : base(true)
         {
-            if (!ADP.IsEmpty(connectionString))
+            if (!string.IsNullOrEmpty(connectionString))
             {
                 ConnectionString = connectionString;
             }

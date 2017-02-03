@@ -121,7 +121,7 @@ namespace System.Data.Odbc
                 default:
                     throw ADP.InvalidCommandType(command.CommandType);
             }
-            if (ADP.IsEmpty(command.CommandText))
+            if (string.IsNullOrEmpty(command.CommandText))
             {
                 throw ADP.CommandTextRequired(ADP.DeriveParameters);
             }

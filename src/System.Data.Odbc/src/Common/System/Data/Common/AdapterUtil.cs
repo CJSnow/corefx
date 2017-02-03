@@ -2,15 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: fix usages of System.Configuration
-// TODO[tinchou]: check Microsoft.SqlServer usages
-// TODO[tinchou]: check GetComputerNameDnsFullyQualified method and SafeNativeMethods.cs
-// TODO[tinchou]: check RevertAssert usages
-// TODO[tinchou]: FileIOPermission usages
-// TODO[tinchou]: check using SysES = System.EnterpriseServices;
-
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Globalization;
@@ -24,7 +16,6 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SysTx = System.Transactions;
 
 namespace System.Data.Common
 {
@@ -1251,7 +1242,6 @@ namespace System.Data.Common
 
 
 
-        //[FileIOPermission(SecurityAction.Assert, AllFiles = FileIOPermissionAccess.PathDiscovery)]
         [ResourceExposure(ResourceScope.Machine)]
         [ResourceConsumption(ResourceScope.Machine)]
         internal static string GetFullPath(string filename)
@@ -1299,11 +1289,6 @@ namespace System.Data.Common
         internal static int DstCompare(string strA, string strB)
         { // this is null safe
             return CultureInfo.CurrentCulture.CompareInfo.Compare(strA, strB, ADP.compareOptions);
-        }
-
-        internal static bool IsEmpty(string str)
-        {
-            return ((null == str) || (0 == str.Length));
         }
 
         internal static bool IsEmptyArray(string[] array)

@@ -598,7 +598,7 @@ namespace System.Data.Odbc
 
             // update the catalog separator
             stringValue = connection.GetInfoStringUnhandled(ODBC32.SQL_INFO.CATALOG_NAME_SEPARATOR);
-            if (!ADP.IsEmpty(stringValue))
+            if (!string.IsNullOrEmpty(stringValue))
             {
                 StringBuilder patternEscaped = new StringBuilder();
                 ADP.EscapeSpecialCharacters(stringValue, patternEscaped);

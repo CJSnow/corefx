@@ -74,7 +74,7 @@ namespace System.Data.Odbc
                 if (0 < Errors.Count)
                 {
                     string source = Errors[0].Source;
-                    return ADP.IsEmpty(source) ? "" : source; // base.Source;
+                    return string.IsNullOrEmpty(source) ? "" : source; // base.Source;
                 }
                 return ""; // base.Source;
             }
