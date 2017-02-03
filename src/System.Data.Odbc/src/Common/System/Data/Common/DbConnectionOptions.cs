@@ -188,16 +188,16 @@ namespace System.Data.Common
                 {
                     if (_parsetable.ContainsKey(KEY.Password))
                     {
-                        return ADP.IsEmpty((string)_parsetable[KEY.Password]);
+                        return string.IsNullOrEmpty((string)_parsetable[KEY.Password]);
                     }
                     else
                     if (_parsetable.ContainsKey(SYNONYM.Pwd))
                     {
-                        return ADP.IsEmpty((string)_parsetable[SYNONYM.Pwd]); // MDAC 83097
+                        return string.IsNullOrEmpty((string)_parsetable[SYNONYM.Pwd]); // MDAC 83097
                     }
                     else
                     {
-                        return ((_parsetable.ContainsKey(KEY.User_ID) && !ADP.IsEmpty((string)_parsetable[KEY.User_ID])) || (_parsetable.ContainsKey(SYNONYM.UID) && !ADP.IsEmpty((string)_parsetable[SYNONYM.UID])));
+                        return ((_parsetable.ContainsKey(KEY.User_ID) && !string.IsNullOrEmpty((string)_parsetable[KEY.User_ID])) || (_parsetable.ContainsKey(SYNONYM.UID) && !string.IsNullOrEmpty((string)_parsetable[SYNONYM.UID])));
                     }
                 }
                 return false;
@@ -452,7 +452,7 @@ namespace System.Data.Common
                     {
                         throw ADP.InvalidDataDirectory();
                     }
-                    else if (ADP.IsEmpty(rootFolderPath))
+                    else if (string.IsNullOrEmpty(rootFolderPath))
                     {
                         rootFolderPath = AppDomain.CurrentDomain.BaseDirectory;
                     }
@@ -720,7 +720,7 @@ namespace System.Data.Common
                     case ParserState.KeyEqual: // \\s*=(?!=)\\s*
                         if (!useOdbcRules && '=' == currentChar) { parserState = ParserState.Key; break; }
                         keyname = GetKeyName(buffer);
-                        if (ADP.IsEmpty(keyname)) { throw ADP.ConnectionStringSyntax(startposition); }
+                        if (string.IsNullOrEmpty(keyname)) { throw ADP.ConnectionStringSyntax(startposition); }
                         buffer.Length = 0;
                         parserState = ParserState.KeyEnd;
                         goto case ParserState.KeyEnd;
@@ -809,7 +809,7 @@ namespace System.Data.Common
                 case ParserState.KeyEqual:
                     // equal sign at end of line
                     keyname = GetKeyName(buffer);
-                    if (ADP.IsEmpty(keyname)) { throw ADP.ConnectionStringSyntax(startposition); }
+                    if (string.IsNullOrEmpty(keyname)) { throw ADP.ConnectionStringSyntax(startposition); }
                     break;
 
                 case ParserState.UnquotedValue:
@@ -1000,7 +1000,7 @@ namespace System.Data.Common
 
                     string keyname, keyvalue;
                     nextStartPosition = GetKeyValuePair(connectionString, startPosition, buffer, firstKey, out keyname, out keyvalue);
-                    if (ADP.IsEmpty(keyname))
+                    if (string.IsNullOrEmpty(keyname))
                     {
                         // if (nextStartPosition != endPosition) { throw; }
                         break;

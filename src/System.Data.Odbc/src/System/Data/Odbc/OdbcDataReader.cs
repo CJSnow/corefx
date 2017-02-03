@@ -2194,7 +2194,7 @@ namespace System.Data.Odbc
                     // find it by parsing the statement
 
                     QualifiedTableName qualifiedTableName = new QualifiedTableName(Connection.QuoteChar(ADP.GetSchemaTable), GetTableNameFromCommandText());
-                    if (!ADP.IsEmpty(qualifiedTableName.Table))
+                    if (!string.IsNullOrEmpty(qualifiedTableName.Table))
                     { // fxcop
                         SetBaseTableNames(qualifiedTableName);
                         if (RetrieveKeyInfo(needkeyinfo, qualifiedTableName, false) <= 0)
@@ -2690,7 +2690,7 @@ namespace System.Data.Odbc
 
         internal bool SameIndexColumn(String currentindexname, String indexname, int ordinal, int ncols)
         {
-            if (ADP.IsEmpty(currentindexname))
+            if (string.IsNullOrEmpty(currentindexname))
             {
                 return false;
             }
@@ -2707,7 +2707,7 @@ namespace System.Data.Odbc
 
         internal int GetOrdinalFromBaseColName(String columnname, String tablename)
         {
-            if (ADP.IsEmpty(columnname))
+            if (string.IsNullOrEmpty(columnname))
             {
                 return -1;
             }
@@ -2719,7 +2719,7 @@ namespace System.Data.Odbc
                     if ((_metadata[i].baseColumnName != null) &&
                         (columnname == _metadata[i].baseColumnName))
                     {
-                        if (!ADP.IsEmpty(tablename))
+                        if (!string.IsNullOrEmpty(tablename))
                         {
                             if (tablename == _metadata[i].baseTableName)
                             {
@@ -2750,7 +2750,7 @@ namespace System.Data.Odbc
                 return null;
             }
             String localcmdtext = _cmdText;
-            if (ADP.IsEmpty(localcmdtext))
+            if (string.IsNullOrEmpty(localcmdtext))
             { // fxcop
                 return null;
             }

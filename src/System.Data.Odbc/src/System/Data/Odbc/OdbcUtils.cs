@@ -517,7 +517,7 @@ namespace System.Data.Odbc
             while (true)
             {
                 nextToken = NextToken();
-                if ((_idx == _len) || ADP.IsEmpty(nextToken))
+                if ((_idx == _len) || string.IsNullOrEmpty(nextToken))
                 { // fxcop
                     break;
                 }

@@ -110,7 +110,7 @@ namespace System.Data.Common
                 _keychain = connectionOptions.ReplacePasswordPwd(out _encryptedUsersConnectionString, true);
             }
 
-            if (!ADP.IsEmpty(restrictions))
+            if (!string.IsNullOrEmpty(restrictions))
             {
                 _restrictionValues = ParseRestrictions(restrictions, synonyms);
                 _restrictions = restrictions;
@@ -165,7 +165,7 @@ namespace System.Data.Common
                         StringBuilder builder = new StringBuilder();
                         for (int i = 0; i < restrictionValues.Length; ++i)
                         {
-                            if (!ADP.IsEmpty(restrictionValues[i]))
+                            if (!string.IsNullOrEmpty(restrictionValues[i]))
                             {
                                 builder.Append(restrictionValues[i]);
                                 builder.Append("=;");
@@ -475,10 +475,10 @@ namespace System.Data.Common
 
                 string keyname, keyvalue; // since parsing restrictions ignores values, it doesn't matter if we use ODBC rules or OLEDB rules
                 nextStartPosition = DbConnectionOptions.GetKeyValuePair(restrictions, startPosition, buffer, false, out keyname, out keyvalue);
-                if (!ADP.IsEmpty(keyname))
+                if (!string.IsNullOrEmpty(keyname))
                 {
                     string realkeyname = ((null != synonyms) ? (string)synonyms[keyname] : keyname); // MDAC 85144
-                    if (ADP.IsEmpty(realkeyname))
+                    if (string.IsNullOrEmpty(realkeyname))
                     {
                         throw ADP.KeywordNotSupported(keyname);
                     }
@@ -534,8 +534,8 @@ namespace System.Data.Common
             {
                 for (int i = 1; i < restrictionValues.Length; ++i)
                 {
-                    Debug.Assert(!ADP.IsEmpty(restrictionValues[i - 1]), "empty restriction");
-                    Debug.Assert(!ADP.IsEmpty(restrictionValues[i]), "empty restriction");
+                    Debug.Assert(!string.IsNullOrEmpty(restrictionValues[i - 1]), "empty restriction");
+                    Debug.Assert(!string.IsNullOrEmpty(restrictionValues[i]), "empty restriction");
                     Debug.Assert(0 >= StringComparer.Ordinal.Compare(restrictionValues[i - 1], restrictionValues[i]));
                 }
             }

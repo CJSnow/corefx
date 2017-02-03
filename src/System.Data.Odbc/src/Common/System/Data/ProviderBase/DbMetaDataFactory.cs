@@ -282,7 +282,7 @@ namespace System.Data.ProviderBase
             foreach (DataRow row in metaDataCollectionsTable.Rows)
             {
                 candidateCollectionName = row[collectionNameColumn, DataRowVersion.Current] as string;
-                if (ADP.IsEmpty(candidateCollectionName))
+                if (string.IsNullOrEmpty(candidateCollectionName))
                 {
                     throw ADP.InvalidXmlInvalidValue(DbMetaDataCollectionNames.MetaDataCollections, DbMetaDataColumnNames.CollectionName);
                 }
