@@ -16,7 +16,6 @@ namespace System.Data.Common
             Marshal.FreeHGlobal(ptr);
         }
 
-        // TODO[tinchou]: test
         internal static void ZeroMemory(IntPtr ptr, int length)
         {
             var zeroes = new byte[length];

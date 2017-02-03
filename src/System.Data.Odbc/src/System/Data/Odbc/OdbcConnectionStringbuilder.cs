@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check OdbcConnectionStringBuilderConverter
-
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -326,39 +324,5 @@ namespace System.Data.Odbc
             }
             return base.TryGetValue(keyword, out value);
         }
-
-        //sealed internal class OdbcConnectionStringBuilderConverter : ExpandableObjectConverter {
-
-        //    // converter classes should have public ctor
-        //    public OdbcConnectionStringBuilderConverter() {
-        //    }
-
-        //    override public bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-        //        if (typeof(System.ComponentModel.Design.Serialization.InstanceDescriptor) == destinationType) {
-        //            return true;
-        //        }
-        //        return base.CanConvertTo(context, destinationType);
-        //    }
-
-        //    override public object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
-        //        if (destinationType == null) {
-        //            throw ADP.ArgumentNull("destinationType");
-        //        }
-        //        if (typeof(System.ComponentModel.Design.Serialization.InstanceDescriptor) == destinationType) {
-        //            OdbcConnectionStringBuilder obj = (value as OdbcConnectionStringBuilder);
-        //            if (null != obj) {
-        //                return ConvertToInstanceDescriptor(obj);
-        //            }
-        //        }
-        //        return base.ConvertTo(context, culture, value, destinationType);
-        //    }
-
-        //    private System.ComponentModel.Design.Serialization.InstanceDescriptor ConvertToInstanceDescriptor(OdbcConnectionStringBuilder options) {
-        //        Type[] ctorParams = new Type[] { typeof(string) };
-        //        object[] ctorValues = new object[] { options.ConnectionString };
-        //        System.Reflection.ConstructorInfo ctor = typeof(OdbcConnectionStringBuilder).GetConstructor(ctorParams);
-        //        return new System.ComponentModel.Design.Serialization.InstanceDescriptor(ctor, ctorValues);
-        //    }
-        //}
     }
 }

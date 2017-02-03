@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check QuoteIdentifier and UnquoteIdentifier https://github.com/dotnet/corefx/blob/c5c75db7c00047d603522fd6e21f350099e09bbb/src/System.Data.Common/src/System/Data/Common/DBCommandBuilder.cs#L1487
-
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
@@ -257,39 +255,6 @@ namespace System.Data.Odbc
         {
             throw ADP.NotSupported();
         }
-        //public string QuoteIdentifier(string unquotedIdentifier, OdbcConnection connection)
-        //{
-        //    ADP.CheckArgumentNull(unquotedIdentifier, "unquotedIdentifier");
-
-        //    // if the user has specificed a prefix use the user specified  prefix and suffix
-        //    // otherwise get them from the provider
-        //    string quotePrefix = QuotePrefix;
-        //    string quoteSuffix = QuoteSuffix;
-        //    if (ADP.IsEmpty(quotePrefix) == true) {
-        //        if (connection == null) {
-        //            // VSTFDEVDIV 479567: use the adapter's connection if QuoteIdentifier was called from 
-        //            // DbCommandBuilder instance (which does not have an overload that gets connection object)
-        //            connection = base.GetConnection() as OdbcConnection;
-        //            if (connection == null) {
-        //                throw ADP.QuotePrefixNotSet(ADP.QuoteIdentifier);
-        //            }
-        //        }
-        //        quotePrefix = connection.QuoteChar(ADP.QuoteIdentifier);
-        //        quoteSuffix = quotePrefix;
-        //    }
-
-        //    // by the ODBC spec "If the data source does not support quoted identifiers, a blank is returned."
-        //    // So if a blank is returned the string is returned unchanged. Otherwise the returned string is used
-        //    // to quote the string
-        //    if ((ADP.IsEmpty(quotePrefix) == false) && (quotePrefix != " ")) {
-        //        return ADP.BuildQuotedString(quotePrefix,quoteSuffix,unquotedIdentifier);
-        //    }
-        //    else {
-        //        return unquotedIdentifier;
-        //    }
-        //}
-
-
 
         protected override void SetRowUpdatingHandler(DbDataAdapter adapter)
         {
@@ -312,43 +277,5 @@ namespace System.Data.Odbc
         {
             throw ADP.NotSupported();
         }
-        //public string UnquoteIdentifier(string quotedIdentifier, OdbcConnection connection){
-
-        //    ADP.CheckArgumentNull(quotedIdentifier, "quotedIdentifier");
-
-
-        //    // if the user has specificed a prefix use the user specified  prefix and suffix
-        //    // otherwise get them from the provider
-        //    string quotePrefix = QuotePrefix;
-        //    string quoteSuffix = QuoteSuffix;
-        //    if (ADP.IsEmpty(quotePrefix) == true) {
-        //        if (connection == null) {
-        //            // VSTFDEVDIV 479567: use the adapter's connection if UnquoteIdentifier was called from 
-        //            // DbCommandBuilder instance (which does not have an overload that gets connection object)
-        //            connection = base.GetConnection() as OdbcConnection;
-        //            if (connection == null) {
-        //                throw ADP.QuotePrefixNotSet(ADP.UnquoteIdentifier);
-        //            }
-        //        }
-        //        quotePrefix = connection.QuoteChar(ADP.UnquoteIdentifier);
-        //        quoteSuffix = quotePrefix;
-        //    }
-
-        //    String unquotedIdentifier;
-        //    // by the ODBC spec "If the data source does not support quoted identifiers, a blank is returned."
-        //    // So if a blank is returned the string is returned unchanged. Otherwise the returned string is used
-        //    // to unquote the string
-        //    if ((ADP.IsEmpty(quotePrefix) == false) || (quotePrefix != " ")) {
-        //        // ignoring the return value because it is acceptable for the quotedString to not be quoted in this
-        //        // context.
-        //        ADP.RemoveStringQuotes(quotePrefix, quoteSuffix, quotedIdentifier, out unquotedIdentifier);
-        //    }
-        //    else {
-        //        unquotedIdentifier = quotedIdentifier;
-        //    }
-        //    return unquotedIdentifier;
-
-        //}
-
     }
 }

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check KeyRestrictionBehavior
-
 using System.ComponentModel;
 using System.Security.Permissions;
 
@@ -103,15 +101,3 @@ namespace System.Data.Common
         }
     }
 }
-
-//namespace System.Data
-//{ // MDAC 83087
-
-//    [Serializable]
-
-//    public enum KeyRestrictionBehavior
-//    { // V1.0.5000
-//        AllowOnly = 0,
-//        PreventUsage = 1,
-//    }
-//}

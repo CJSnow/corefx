@@ -81,7 +81,7 @@ namespace System.Data.Odbc.Tests
                         Assert.Equal(12345.12002m, reader.GetDecimal(4));
                         Assert.Equal(1.00000001d, reader.GetDouble(5));
                         Assert.Equal(1f, reader.GetFloat(6));
-                        // TODO[tinchou]: test Guid reader
+                        // TODO fix: Guids work in SQLServer but not SQLite
                         //Assert.Equal(new Guid("9b7c0b33-d38b-4d89-a3b2-0202c55ce6e5"), reader.GetGuid(7));
                         Assert.Equal(32767532, reader.GetInt32(8));
                         Assert.Equal(2147483647L, reader.GetInt64(9));
