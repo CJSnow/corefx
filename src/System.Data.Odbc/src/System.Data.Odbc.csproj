@@ -2,14 +2,17 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
   <PropertyGroup>
-    <ProjectGuid>{1DD0FF15-6234-4BD6-850A-6A7F05479554}</ProjectGuid>
     <AssemblyName>System.Data.Odbc</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <IsPartialFacadeAssembly Condition="'$(TargetGroup)' == 'net463'">true</IsPartialFacadeAssembly>
+    <ProjectGuid>{7BAD100F-AD6B-490A-AF7C-8E3854E812C0}</ProjectGuid>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Unix-Debug|AnyCPU'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Unix-Release|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Windows_NT-Debug|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Windows_NT-Release|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Unix-Debug|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='netcoreapp-Unix-Release|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='net463-Windows_NT-Debug|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='net463-Windows_NT-Release|AnyCPU'" />
   <ItemGroup Condition="'$(IsPartialFacadeAssembly)' != 'true'">
     <Compile Include="Common\System\Data\Common\AdapterUtil.cs" />
     <Compile Include="Common\System\Data\Common\DbConnectionOptions.cs" />
@@ -101,19 +104,16 @@
     <Compile Include="Common\System\HResults.cs" />
     <Compile Include="Common\System\Data\Common\MultipartIdentifier.cs" />
     <Compile Include="Common\System\Data\Common\ReadOnlyCollection.cs" />
+    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.cs" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetsWindows)' == 'true' And '$(IsPartialFacadeAssembly)' != 'true' ">
-    <!--TODO s/Unix/Windows/-->
-    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Windows.cs" />
-    <Compile Include="Common\System\Data\ProviderBase\DbConnectionPoolIdentity.Unix.cs" />
+    <Compile Include="Common\System\Data\Common\ExternDll.Windows.cs" />
     <Compile Include="$(CommonPath)\System\Data\Locale\LocaleMapper.Windows.cs">
       <Link>Common\System\Data\Locale\LocaleMapper.Windows.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetsWindows)' != 'true' And '$(IsPartialFacadeAssembly)' != 'true' ">
-    <!--TODO test Unix implementation-->
-    <Compile Include="Common\System\Data\Common\UnsafeNativeMethods.Unix.cs" />
-    <Compile Include="Common\System\Data\ProviderBase\DbConnectionPoolIdentity.Unix.cs" />
+    <Compile Include="Common\System\Data\Common\ExternDll.Unix.cs" />
     <Compile Include="$(CommonPath)\System\Data\Locale\LocaleMapper.Unix.cs">
       <Link>Common\System\Data\Locale\LocaleMapper.Unix.cs</Link>
     </Compile>

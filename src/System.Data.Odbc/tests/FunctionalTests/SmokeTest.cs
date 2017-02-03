@@ -5,14 +5,10 @@ namespace System.Data.Odbc.Tests
 {
     public class SmokeTest
     {
-        private const string connectionString =
-            "Driver=SQLite3;" +
-            "Database=smoketests.sqlite;";
-
         [Fact]
         public void CreateInsertSelectTest()
         {
-            using (var dbcon = new OdbcConnection(connectionString))
+            using (var dbcon = new OdbcConnection(ConnectionStrings.WorkingConnection))
             {
                 dbcon.Open();
                 using (var transaction = dbcon.BeginTransaction())
