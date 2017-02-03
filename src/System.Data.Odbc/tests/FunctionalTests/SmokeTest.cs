@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 
 namespace System.Data.Odbc.Tests
 {
     public class SmokeTest
     {
-        [Fact]
+        [ConditionalFact(nameof(OdbcAndSqliteInstalled))]
         public void CreateInsertSelectTest()
         {
             using (var dbcon = new OdbcConnection(ConnectionStrings.WorkingConnection))
@@ -90,6 +89,31 @@ namespace System.Data.Odbc.Tests
                     }
                     // not calling .Commit() will automatically rollback the transaction.
                 }
+            }
+        }
+
+        private static bool? s_odbcAndSqliteInstalled;
+        public static bool OdbcAndSqliteInstalled
+        {
+            get
+            {
+                if (!s_odbcAndSqliteInstalled.HasValue)
+                {
+                    try
+                    {
+                        using (var dbcon = new OdbcConnection(ConnectionStrings.WorkingConnection))
+                        {
+                            dbcon.Open();
+                            s_odbcAndSqliteInstalled = true;
+                        }
+                    }
+                    catch (Exception ex) when (ex is DllNotFoundException || ex is OdbcException)
+                    {
+                        s_odbcAndSqliteInstalled = false;
+                    }
+                }
+
+                return s_odbcAndSqliteInstalled.Value;
             }
         }
     }
