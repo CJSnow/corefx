@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: find missing partial for OdbcConnection containing InnerConnection and others
-// TODO[tinchou]: Check System.EnterpriseServices
-// TODO[tinchou]: Check EnlistedTransaction
-// TODO[tinchou]: SqlConnection removed the ICloneable implementation, and so did we
-
 using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
@@ -368,10 +363,6 @@ namespace System.Data.Odbc
         private void DisposeMe(bool disposing)
         { // MDAC 65459
         }
-
-        //public void EnlistDistributedTransaction(System.EnterpriseServices.ITransaction transaction) {
-        //    EnlistDistributedTransactionHelper(transaction);
-        //}        
 
         internal string GetConnectAttrString(ODBC32.SQL_ATTR attribute)
         {
@@ -950,31 +941,6 @@ namespace System.Data.Odbc
                 HandleError(connectionHandle, retcode);
             }
         }
-
-        //internal void Open_EnlistTransaction(SysTx.Transaction transaction) {
-
-        //    if ((null != this.weakTransaction) && this.weakTransaction.IsAlive) {
-        //        throw ADP.LocalTransactionPresent();
-        //    }
-
-        //    SysTx.IDtcTransaction oleTxTransaction = ADP.GetOletxTransaction(transaction);
-
-        //    OdbcConnectionHandle connectionHandle = ConnectionHandle;
-        //    ODBC32.RetCode retcode;
-        //    if (null == oleTxTransaction) {
-        //        retcode = connectionHandle.SetConnectionAttribute2(ODBC32.SQL_ATTR.SQL_COPT_SS_ENLIST_IN_DTC, (IntPtr) ODBC32.SQL_DTC_DONE, ODBC32.SQL_IS_PTR);
-        //    }
-        //    else {
-        //        retcode = connectionHandle.SetConnectionAttribute4(ODBC32.SQL_ATTR.SQL_COPT_SS_ENLIST_IN_DTC,  oleTxTransaction, ODBC32.SQL_IS_PTR);
-        //    }
-
-        //    if (retcode != ODBC32.RetCode.SUCCESS) {
-        //        HandleError(connectionHandle, retcode);
-        //    }
-
-        //    // Tell the base class about our enlistment
-        //    //((OdbcConnectionOpen)InnerConnection).EnlistedTransaction = transaction;
-        //}
 
         internal string Open_GetServerVersion()
         {

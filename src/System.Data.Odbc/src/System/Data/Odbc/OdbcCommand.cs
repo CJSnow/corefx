@@ -130,7 +130,6 @@ namespace System.Data.Odbc
             _cmdWrapper = null;
         }
 
-        // TODO[tinchou]: use this or the one in Helper, but not both
         protected override void Dispose(bool disposing)
         { // MDAC 65459
             if (disposing)

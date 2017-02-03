@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check protected override DataTable PrepareCollection(String collectionName, String[] restrictions, DbConnection connection)
-
 using System.IO;
 using System.Data.Common;
 using System.Data.ProviderBase;

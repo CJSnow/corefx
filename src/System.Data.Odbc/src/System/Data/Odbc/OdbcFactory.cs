@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check public override CodeAccessPermission CreatePermission(PermissionState state)
-
 using System.Data.Common;
 
 namespace System.Data.Odbc
@@ -45,9 +43,5 @@ namespace System.Data.Odbc
         {
             return new OdbcParameter();
         }
-
-        //public override CodeAccessPermission CreatePermission(PermissionState state) {
-        //    return new OdbcPermission(state);
-        //}
     }
 }

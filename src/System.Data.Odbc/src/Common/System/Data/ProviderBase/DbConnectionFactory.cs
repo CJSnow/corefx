@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check ForceNewConnection usage
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data.Common;
@@ -269,7 +267,7 @@ namespace System.Data.ProviderBase
                 }
                 else
                 {
-                    // TODO[tinchou]: Maybe add ForceNewConnection to OdbcConnection
+                    // TODO: move this to src/Common and integrate with SqlClient
                     //if (((SqlClient.SqlConnection)owningConnection).ForceNewConnection)
                     //{
                     //    Debug.Assert(!(oldConnection is DbConnectionClosed), "Force new connection, but there is no old connection");

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: reenable ADP.CheckVersionMDAC
-
 using System.Threading;
 
 namespace System.Data.Odbc
@@ -20,8 +18,6 @@ namespace System.Data.Odbc
             OdbcEnvironmentHandle globalEnvironmentHandle = s_globalEnvironmentHandle as OdbcEnvironmentHandle;
             if (null == globalEnvironmentHandle)
             {
-                //ADP.CheckVersionMDAC(true);
-
                 lock (s_globalEnvironmentHandleLock)
                 {
                     globalEnvironmentHandle = s_globalEnvironmentHandle as OdbcEnvironmentHandle;

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// TODO[tinchou]: check override methods and System.Transactions usage
-
 using System.Data.Common;
 using System.Data.ProviderBase;
 
@@ -57,10 +55,6 @@ namespace System.Data.Odbc
             }
         }
 
-        //override protected void Activate(SysTx.Transaction transaction)
-        //{
-        //}
-
         protected override void Activate()
         {
         }
@@ -89,9 +83,5 @@ namespace System.Data.Odbc
         {
             NotifyWeakReference(OdbcReferenceCollection.Closing);
         }
-
-        //override public void EnlistTransaction(SysTx.Transaction transaction) {
-        //    OuterConnection.Open_EnlistTransaction(transaction);
-        //}
     }
 }
