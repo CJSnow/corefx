@@ -81,9 +81,9 @@
     <Compile Include="System\Data\Odbc\OdbcFactory.cs" />
     <Compile Include="System\Data\Odbc\OdbcHandle.cs" />
     <Compile Include="System\Data\Odbc\OdbcInfoMessageEvent.cs" />
-    <Compile Include="System\Data\Odbc\odbcmetadatacollectionnames.cs" />
-    <Compile Include="System\Data\Odbc\odbcmetadatacolumnnames.cs" />
-    <Compile Include="System\Data\Odbc\odbcmetadatafactory.cs" />
+    <Compile Include="System\Data\Odbc\OdbcMetaDataCollectionNames.cs" />
+    <Compile Include="System\Data\Odbc\OdbcMetaDataColumnNames.cs" />
+    <Compile Include="System\Data\Odbc\OdbcMetaDataFactory.cs" />
     <Compile Include="System\Data\Odbc\OdbcParameter.cs" />
     <Compile Include="System\Data\Odbc\OdbcParameterCollection.cs" />
     <Compile Include="System\Data\Odbc\OdbcParameterCollectionHelper.cs" />
