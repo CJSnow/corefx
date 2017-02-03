@@ -27,6 +27,11 @@ namespace System.Data.ProviderBase
             get { return _isRestricted; }
         }
 
+        // TODO[tinchou]
+        internal static DbConnectionPoolIdentity GetCurrent()
+        {
+            throw new PlatformNotSupportedException();
+        }
 
         public override bool Equals(object value)
         {

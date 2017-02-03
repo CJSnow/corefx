@@ -11,12 +11,6 @@ using System.Text;
 
 namespace System.Data.Common
 {
-    internal static class ExternDll
-    {
-        public const string Odbc32 = "odbc";
-    }
-
-
     [SuppressUnmanagedCodeSecurity]
     internal static partial class UnsafeNativeMethods
     {
