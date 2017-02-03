@@ -14,10 +14,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTypeTests.cs" />
-    <Compile Include="SimpleStatementsTests.cs" />
-    <Compile Include="OdbcConnectionTests.cs" />
-    <Compile Include="SelectTestHelper.cs" />
+    <Compile Include="SmokeTest.cs" />
   </ItemGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>
