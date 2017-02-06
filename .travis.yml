@@ -4,6 +4,7 @@ os:
   - osx
 
 script:
+  - ./init-tools.sh
   - ./build.sh
   - ./build-tests.sh -skiptests
   - ./tools/msbuild.sh /v:m /t:BuildAndTest src/System.Data.Odbc/tests/FunctionalTests/System.Data.Odbc.Tests.csproj
