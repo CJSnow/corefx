@@ -36,6 +36,29 @@ namespace System.Data.Odbc
             }
         }
 
+        public override bool IsFixedSize
+        {
+            get
+            {
+                return ((System.Collections.IList)InnerList).IsFixedSize;
+            }
+        }
+
+        public override bool IsReadOnly
+        {
+            get
+            {
+                return ((System.Collections.IList)InnerList).IsReadOnly;
+            }
+        }
+
+        public override bool IsSynchronized
+        {
+            get
+            {
+                return ((System.Collections.ICollection)InnerList).IsSynchronized;
+            }
+        }
 
         public override object SyncRoot
         {
