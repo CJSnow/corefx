@@ -12,7 +12,7 @@ using System.Text;
 
 namespace System.Data.Odbc
 {
-    public sealed partial class OdbcParameter : DbParameter
+    public sealed partial class OdbcParameter : DbParameter, ICloneable, IDataParameter, IDbDataParameter
     {
         private bool _hasChanged;
         private bool _userSpecifiedType;
@@ -237,7 +237,7 @@ namespace System.Data.Odbc
             }
         }
 
-        public new Byte Precision
+        public new byte Precision
         {
             get
             {
@@ -273,7 +273,7 @@ namespace System.Data.Odbc
             return (0 != _precision);
         }
 
-        public new Byte Scale
+        public new byte Scale
         {
             get
             {
@@ -578,6 +578,12 @@ namespace System.Data.Odbc
             return s;
         }
 
+        //This is required for OdbcCommand.Clone to deep copy the parameters collection
+        object ICloneable.Clone()
+        {
+            return new OdbcParameter(this);
+        }
+
         private void CopyParameterInternal()
         {
             _internalValue = Value;
@@ -589,6 +595,17 @@ namespace System.Data.Odbc
             _internalScale = ShouldSerializeScale() ? ScaleInternal : ValueScale(_internalValue);
             _internalOffset = Offset;
             _internalUserSpecifiedType = UserSpecifiedType;
+        }
+
+        private void CloneHelper(OdbcParameter destination)
+        {
+            CloneHelperCore(destination);
+            destination._userSpecifiedType = _userSpecifiedType;
+            destination._typemap = _typemap;
+            destination._parameterName = _parameterName;
+            destination._precision = _precision;
+            destination._scale = _scale;
+            destination._hasScale = _hasScale;
         }
 
         internal void ClearBinding()

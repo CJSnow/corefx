@@ -14,15 +14,26 @@ namespace System.Data.Odbc
 
         private ParameterDirection _direction;
         private int _size;
-
         private int _offset;
         private string _sourceColumn;
+        private DataRowVersion _sourceVersion;
         private bool _sourceColumnNullMapping;
 
         private bool _isNullable;
 
         private object _coercedValue;
 
+        private OdbcParameter(OdbcParameter source) : this() { // V1.2.3300, Clone
+            ADP.CheckArgumentNull(source, "source");
+
+            source.CloneHelper(this);
+
+            ICloneable cloneable = (_value as ICloneable);
+            if (null != cloneable)
+            { // MDAC 49322
+                _value = cloneable.Clone();
+            }
+        }
 
         private object CoercedValue
         {
@@ -148,6 +159,41 @@ namespace System.Data.Odbc
             }
         }
 
+        override public DataRowVersion SourceVersion
+        { // V1.2.3300, XXXParameter V1.0.3300
+            get
+            {
+                DataRowVersion sourceVersion = _sourceVersion;
+                return ((0 != sourceVersion) ? sourceVersion : DataRowVersion.Current);
+            }
+            set
+            {
+                switch (value)
+                { // @perfnote: Enum.IsDefined
+                    case DataRowVersion.Original:
+                    case DataRowVersion.Current:
+                    case DataRowVersion.Proposed:
+                    case DataRowVersion.Default:
+                        _sourceVersion = value;
+                        break;
+                    default:
+                        throw ADP.InvalidDataRowVersion(value);
+                }
+            }
+        }
+
+        private void CloneHelperCore(OdbcParameter destination)
+        {
+            destination._value = _value;
+            // NOTE: _parent is not cloned
+            destination._direction = _direction;
+            destination._size = _size;
+            destination._offset = _offset;
+            destination._sourceColumn = _sourceColumn;
+            destination._sourceVersion = _sourceVersion;
+            destination._sourceColumnNullMapping = _sourceColumnNullMapping;
+            destination._isNullable = _isNullable;
+        }
 
         internal object CompareExchangeParent(object value, object comparand)
         {

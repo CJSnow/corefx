@@ -267,6 +267,23 @@ namespace System.Data.Common
             return InvalidEnumerationValue(typeof(CommandType), (int)value);
         }
 
+        // IDataParameter.SourceVersion
+        static internal ArgumentOutOfRangeException InvalidDataRowVersion(DataRowVersion value)
+        {
+#if DEBUG
+            switch (value)
+            {
+                case DataRowVersion.Default:
+                case DataRowVersion.Current:
+                case DataRowVersion.Original:
+                case DataRowVersion.Proposed:
+                    Debug.Assert(false, "valid DataRowVersion " + value.ToString());
+                    break;
+            }
+#endif
+            return InvalidEnumerationValue(typeof(DataRowVersion), (int)value);
+        }
+
         // IDbConnection.BeginTransaction, OleDbTransaction.Begin
         internal static ArgumentOutOfRangeException InvalidIsolationLevel(IsolationLevel value)
         {
