@@ -25,6 +25,26 @@ namespace System.Data.Odbc
             _innerConnection = DbConnectionClosedNeverOpened.SingletonInstance;
         }
 
+        // Copy Constructor
+        private void CopyFrom(OdbcConnection connection)
+        { // V1.2.3300
+            ADP.CheckArgumentNull(connection, "connection");
+            _userConnectionOptions = connection.UserConnectionOptions;
+            _poolGroup = connection.PoolGroup;
+
+            // SQLBU 432115
+            //  Match the original connection's behavior for whether the connection was never opened,
+            //  but ensure Clone is in the closed state.
+            if (DbConnectionClosedNeverOpened.SingletonInstance == connection._innerConnection)
+            {
+                _innerConnection = DbConnectionClosedNeverOpened.SingletonInstance;
+            }
+            else
+            {
+                _innerConnection = DbConnectionClosedPreviouslyOpened.SingletonInstance;
+            }
+        }
+
         internal int CloseCount
         {
             get
@@ -115,8 +135,6 @@ namespace System.Data.Odbc
                 return _userConnectionOptions;
             }
         }
-
-        public static object ExecutePermission { get; internal set; }
 
         internal void Abort(Exception e)
         {

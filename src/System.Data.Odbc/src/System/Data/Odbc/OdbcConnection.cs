@@ -13,7 +13,7 @@ using SysTx = System.Transactions;
 
 namespace System.Data.Odbc
 {
-    public sealed partial class OdbcConnection : DbConnection
+    public sealed partial class OdbcConnection : DbConnection, ICloneable
     {
         private int _connectionTimeout = ADP.DefaultConnectionTimeout;
 
@@ -26,6 +26,12 @@ namespace System.Data.Odbc
         public OdbcConnection(string connectionString) : this()
         {
             ConnectionString = connectionString;
+        }
+
+        private OdbcConnection(OdbcConnection connection) : this()
+        { // Clone
+            CopyFrom(connection);
+            _connectionTimeout = connection._connectionTimeout;
         }
 
         internal OdbcConnectionHandle ConnectionHandle
@@ -303,6 +309,12 @@ namespace System.Data.Odbc
             {
                 throw ADP.OpenConnectionRequired(method, state); // MDAC 68323
             }
+        }
+
+        object ICloneable.Clone()
+        {
+            OdbcConnection clone = new OdbcConnection(this);
+            return clone;
         }
 
         internal bool ConnectionIsAlive(Exception innerException)
