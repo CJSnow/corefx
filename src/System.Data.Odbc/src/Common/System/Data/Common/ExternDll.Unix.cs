@@ -6,7 +6,8 @@ namespace System.Data.Common
 {
     internal static class ExternDll
     {
-        public const string Odbc32 = "odbc.2";
+	    // TODO[t-magonz]: write an OSX-specific file
+        public const string Odbc32 = "odbc.so.2";
     }
 }
 
